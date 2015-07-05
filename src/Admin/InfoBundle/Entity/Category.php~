@@ -1,0 +1,31 @@
+<?php
+
+namespace Admin\InfoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="info_category")
+ */
+class Category
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+     /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     */
+    protected $name;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Page", mappedBy="category")
+     */
+    protected $pages;
+    
+}

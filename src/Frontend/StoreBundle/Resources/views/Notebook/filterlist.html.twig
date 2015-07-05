@@ -1,0 +1,522 @@
+<form action="" method="post" class="sidebar-form" id="notebookfilter">
+<div class="properties" id="box_filter">    
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Производитель
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.1%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" name="{{entity.id}}" value="0" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>
+    <div class="properties_block  opened">
+        <div class="block_title">
+            <i></i>
+            Размер дисплея
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.4%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Разрешение экрана
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.9%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>  
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Покрытие экрана
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.20%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>    
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Серия процессора
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.6%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>     
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Частота процессора
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.8%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>      
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Количество ядер
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.7%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div> 
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Объем оперативной памяти
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.10%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>     
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Видеокарта производитель
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.11%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>   
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Тип видеокарты
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.21%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>       
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Тип накопителя
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.12%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>        
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Объем накопителя
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.13%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Оптический привод
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.14%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div> 
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Операционная система
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.15%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>  
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Цвет
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.16%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div>    
+    <div class="properties_block opened">
+        <div class="block_title">
+            <i></i>
+            Вес
+        </div>
+        <ul class="chechboxes">
+            {% for entity in entities.5%}
+            <li {% if entity.count == 0 %}class="disabled"{%else%}class="li-property"{%endif%} onclick="selfilter()">
+                <input {% if entity.count == 0 %}disabled="disabled" {%endif%} id="prop_{{entity.id}}" type="checkbox" value="0" name="{{entity.id}}" {% if selectedfilter[entity.id] is defined %}checked{%endif%}>
+                <div>
+                    <label for="prop_{{entity.id}}">
+                        {% if selectedfilter[entity.id] is defined %}
+                            <b>{{entity.value}}</b>
+                        {%else%}
+                           {{entity.value}} 
+                        {% endif %}
+                        {% if entity.count > 0 %}
+                            <span class="count">
+                            {% if selectedfilter[entity.id] is defined %}
+
+                            {%else%}
+                                ({{entity.count}})
+                            {% endif %}
+                            </span>
+                        {%endif%}
+                    </label>
+                </div>
+                <div class="clr"></div>
+            </li>
+            {% endfor %}
+        </ul>    
+    </div> 
+    <div class="button">
+        <input class="btn disabled" type="submit" value="Найти" name="submit">
+    </div>
+</div>
+</form>        
+
+        
+        

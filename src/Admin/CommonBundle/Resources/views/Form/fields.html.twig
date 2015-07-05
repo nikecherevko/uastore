@@ -1,0 +1,24 @@
+{% block form_row %}
+{% spaceless %}
+    <div class="form_row">
+        <div class="admin-form-label">{{ form_label(form) }}</div>
+        <div class="admin-form-input">{{ form_widget(form) }}</div>
+        <div class="admin-form-error">{{ form_errors(form) }}</div>      
+        <div class="height-15"></div>      
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+ 
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <span class="error_list">
+                {% for error in errors %}
+                     * {{ error.message }} 
+                {% endfor %}
+            </span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+ 

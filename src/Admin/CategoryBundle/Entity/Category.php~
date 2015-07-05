@@ -1,0 +1,303 @@
+<?php
+
+namespace Admin\CategoryBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="category")
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     errorPath="title",
+ *     message="Категория с таким названием уже существует."
+ * )
+ */
+class Category
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $parent_id;
+    
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage = "Минимальное количество 2 символа",
+     * )
+     */
+    protected $title;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $image;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $position;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $count;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $countchild;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $visible;
+    
+    /**
+    * @ORM\Column(type="datetime")
+    */
+    protected $created;
+    
+    
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     * 
+     * @Assert\Image(
+     *     minWidth = 15,
+     *     maxWidth = 700,
+     *     minHeight = 15,
+     *     maxHeight = 700,
+     *     maxWidthMessage = "Максимальная ширина логотипа 700px",
+     *     minWidthMessage = "Минимальная ширина логотипа 15px",
+     *     maxHeightMessage = "Максимальная высота логотипа 700px",
+     *     minHeightMessage = "Минимальная высота логотипа 15px",
+     *     mimeTypesMessage = "Этот формат изображения не поддерживается",
+     * )
+     */
+    protected $file;
+
+     
+    
+    /**
+    * constructor
+    */
+    public function __construct()
+    {
+      $this->created = new \DateTime();
+      $this->parent_id = 0;
+      $this->position = 0;
+      $this->count = 0;
+      $this->countchild = 0;
+      $this->visible = false;
+    }
+ 
+ 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set parent_id
+     *
+     * @param integer $parentId
+     * @return Category
+     */
+    public function setParentId($parentId)
+    {
+        $this->parent_id = $parentId;
+
+        return $this;
+    }
+
+    /**
+     * Get parent_id
+     *
+     * @return integer 
+     */
+    public function getParentId()
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Category
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Category
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Category
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set count
+     *
+     * @param integer $count
+     * @return Category
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+
+        return $this;
+    }
+
+    /**
+     * Get count
+     *
+     * @return integer 
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * Set countchild
+     *
+     * @param integer $countchild
+     * @return Category
+     */
+    public function setCountchild($countchild)
+    {
+        $this->countchild = $countchild;
+
+        return $this;
+    }
+
+    /**
+     * Get countchild
+     *
+     * @return integer 
+     */
+    public function getCountchild()
+    {
+        return $this->countchild;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return Category
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean 
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Category
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+}

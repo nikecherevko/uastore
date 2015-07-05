@@ -1,0 +1,68 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/admininfo/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Информационные страницы</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_info' }) }}     
+<div class="box box-primary">
+    <div class="box-header"><h2>Список</h2></div>
+    <div class="box-info">
+        <div id="boxindex">    
+            {% for flashMessage in app.session.flashbag.get('notice_success') %}
+                <script type="text/javascript" src="{{ asset('bundles/admininfo/js/success_message.js') }}"></script>
+            {% endfor %}    
+            <ul>    
+                {% if entities %}
+                {% for entity in entities %}
+                <li id="li-container{{entity.id}}"> 
+                    <div class="li-content-container">    
+                        <div class="li-content">{{ entity.title }}</div>
+                        <div class="li-content-button">
+                            <a href="{{ path('admin_info_page_edit', { 'id': entity.id }) }}">
+                                <button type="button" class="btn btn-default btn-sm">edit</button>
+                            </a>
+                        </div>
+                        <div class="li-content-button">
+                            <a href="{{ path('admin_info_page_show', { 'id': entity.id }) }}">
+                                <button type="button" class="btn btn-default btn-sm">show</button>
+                            </a>
+                        </div>
+                        <div class="li-content-button">
+                            <div class="confitem{{entity.id}}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}}, '{{ entity.title }}', 0)">delete</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="categorysub_{{entity.id}}" class="li-content-both"> </div>
+                        <div class="height10"></div>
+                    </div>    
+                </li>
+                {% endfor %}
+
+                {% else %}
+                    <li>Категорий нет. </li>
+                {% endif %} 
+            </ul>
+        </div>  
+        <br>
+        <div class="li-content">
+            <div>   
+                <a href="{{ path('admin_info_page_new', {'id': 0}) }}">
+                    <button type="button" class="btn btn-primary btn-sm">Создать страницу</button>
+                </a> 
+            </div>
+        </div> 
+    </div>  
+    <br> 
+    <br> 
+</div>    
+                    
+{% endblock %}
+    
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admininfo/js/confirm.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+ 
+{% block fos_user_title %}
+    <p class="login-box-msg">Register a new membership</p> 
+{% endblock fos_user_title %}
+            
+
+{% block fos_user_content %}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}

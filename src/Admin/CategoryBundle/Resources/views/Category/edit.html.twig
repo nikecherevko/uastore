@@ -1,0 +1,74 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% form_theme edit_form 'AdminCommonBundle:Form:fields.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/admincategory/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/admincategory/css/form.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Категории товаров</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_category' }) }}    
+<div class="box box-primary">
+    <div class="box-header"><h2>Редактирование категории</h2></div>
+        <div class="box-info"> 
+            
+            {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+               {{ flashMessage }}
+            </div>
+            <br>
+            {% endfor %}
+            
+            {{ form_start(edit_form) }}
+            
+            {{ form_row(edit_form.title) }}
+            
+            <div class="form_row">
+                <div class="admin-form-label">{{ form_label(edit_form.file) }}</div>
+                <div class="admin-form-input">
+                    <span class="btn btn-default btn-file">    
+                        <span class="label-image">Выберите файл...</span>{{ form_widget(edit_form.file) }}
+                    </span>  
+                </div>
+                <div class="admin-form-error"></div>      
+                <div class="admin-form-error">{{ form_errors(edit_form.file) }}</div>      
+                <div class="height-15"></div>      
+            </div>
+                   
+            <div class="signup-submit">
+                <div id="fileupload">
+                    {% if imagepath %} 
+                        <img src="{{ asset('uploads/admincategory/'~imagepath)}}" alt="logo" width="80px" />
+                    {% else %}
+                        <img src="{{ asset('images/icon/nologo.gif')}}" alt="no logo" width="100px" />   
+                    {% endif %}   
+                </div>
+            </div>
+                    
+            <div class="form_row">
+                <div class="admin-form-label">{{ form_label(edit_form.visible) }}</div>
+                <div class="admin-form-input">{{ form_widget(edit_form.visible) }}
+                    <label for="admin_categorybundle_category_visible"></label>
+                </div>
+                <div class="admin-form-error">{{ form_errors(edit_form.visible) }}</div>      
+                <div class="height-15"></div>      
+            </div>    
+            
+            <div class="signup-submit">
+                <span>
+                    <input class="btn btn-primary  btn-flat" type="submit" value="Сохранить">
+                </span>
+            </div>   
+             
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admincategory/js/imageupload.js') }}"></script>
+{% endblock %}

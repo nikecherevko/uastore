@@ -1,0 +1,75 @@
+<header>
+    <div class="head_toolbar">
+        <div class="width">
+            <div class="right_block">
+
+            </div>
+            <div class="left_block">
+                <ul class="ul info_icons_block">
+                    <li class="delivery">
+                        <a href="{{path('article', {id: 37, slug:'dostavka'})}}">Доставка</a>
+                        <i></i>
+                    </li>
+                    <li class="payment">
+                        <a href="{{path('article', {id: 34, slug:'oplata'})}}">Оплата</a>
+                        <i></i>
+                    </li>
+                    <li class="about">
+                        <a href="{{path('article', {id: 39, slug:'o-magazine'})}}">О магазине</a>
+                        <i></i>
+                    </li>
+                    <li class="points">
+                        <a href="{{path('article', {id: 40, slug:'contact'})}}">Контакты</a>
+                        <i></i>   
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="width">
+        <div>
+            <div class="center_wrapper">
+                <div class="center_part">
+                    <div class="logo">
+                        <span itemprop="url"></span>
+                        <a href="{{path('homepage')}}"><img  src="{{ asset('images/logo.png') }}" itemprop="logo" title="Интернет-магазин" alt=""></a>
+                    </div>
+                    <div class="search">
+                         
+                        <div class="form">
+                            <form id="head_search_form" action="">
+                            <div class="submit">
+                            <input class="btn btn-right" type="submit" value="найти" onclick="doSearch();return false;"  >
+                            </div>
+                            <div class="input_part" id="hsu">
+                            <div class="input">
+                            <input class="searchproduct" id="head_search_input" placeholder="Поиск ноутбука..." value="">
+                            </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="serach_result_container">
+                         
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>    
+            <div class="right_part">
+                <div class="call_block">
+                    <div class="request_callback">
+                        <form id="request_callback_form" action="">
+                            <input id="submitcallme" class="submit btn btn-orange" type="submit" value="Перезвоните мне" onclick="doCallme();return false;">
+                            <input id="telephcall" class="callmetel" type="tel" placeholder="(0XX) XXX-XX-XX" value="" name="callmetel" required>
+                        </form>
+                    </div>    
+                </div> 
+                <div id="head-cart" class="cart">
+                    {{ render(controller('FrontendStoreBundle:Index:viewCart')) }}  
+                </div>    
+            </div>    
+            <div class="clr"></div>
+        </div>
+    </div>    
+</header>
+ 

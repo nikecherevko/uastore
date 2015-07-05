@@ -1,0 +1,94 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminfinance/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Заказ</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_finance' }) }} 
+<div class="box box-primary">
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        <div class="product_detail">
+        <div class="table_title full short">
+            <span>Данные заказа</span>
+            <i></i>
+        </div>
+        <table>
+        <tbody>
+        <tr class="full short gray">
+            <td class="name">Номер заказа</td>
+            <td class="value"><b>№ {{entity.id}}</b></td>
+        </tr>
+        <tr class="full">
+            <td class="name">Ф.И.О</td>
+            <td class="value">{{entity.customer}}</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Телефон</td>
+            <td class="value">{{entity.telephone}}</td>
+        </tr>
+        <tr class="full">
+            <td class="name">Адрес доставки</td>
+            <td class="value">{{entity.address}}</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Способ оплаты</td>
+            <td class="value">{{entity.payment.name}}</td>
+        </tr>
+        <tr class="full">
+            <td class="name">Общая сумма</td>
+            <td class="value">{{entity.price|number_format(0, '.', ' ')}} гр.</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Статус:</td>
+            <td class="value">
+                <div id="order-state">{{ states[entity.state] }} </div>
+            </td>
+        </tr>
+        <tr class="full">
+            <td class="name">Содержимое заказа:</td>
+            <td class="value">
+                {% for order in orders%}
+                    - Ноутбук 
+                <a href="{{ path('admin_notebook_show', {'id': order.notebook.id})}}">
+                    {{order.notebook.manufacturer}} {{order.notebook.model}} ({{order.notebook.modification}})
+                    <br>
+                </a>
+                {% endfor %}
+            </td>
+        </tr>   
+        </table>
+        <br>
+        <div class="act-order">
+            <div class="act-button">
+                <button type="button" class="btn btn-success btn-sm" onclick="confirmorder({{entity.id}},1)">Подтвердить</button>
+            </div>     
+            <div class="act-button">
+                <button type="button" class="btn btn-danger btn-sm" onclick="confirmorder({{entity.id}},2)">Отменить</button>
+            </div>
+            <div class="act-button">
+                <button type="button" class="btn btn-primary btn-sm" onclick="confirmorder({{entity.id}},3)">Доставлено</button>
+            </div> 
+            <div class="act-button">
+                <a href="{{ path('admin_order_edit', {'id': entity.id}) }}">
+                    <button type="button" class="btn btn-warning btn-sm">Редактировать</button>
+                </a>
+            </div> 
+        </div>    
+        <div class="clr"></div> 
+        </div>
+    </div>
+</div>
+{% endblock %}
+  
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminfinance/js/confirm.js') }}"></script>
+{% endblock %}

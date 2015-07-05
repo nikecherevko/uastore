@@ -1,0 +1,70 @@
+    {% for flashMessage in app.session.flashbag.get('notice_success') %}
+        <div id="notice-box" class="alert alert-success">
+        {{ flashMessage }}
+        </div>
+    {% endfor %}    
+        
+    <ul >    
+    {% if entities %}
+        {% for entity in entities %}
+        <li id="li-container{{entity.id}}"> 
+        <div class="li-content-container">    
+            <div class="li-content-plus"> 
+            {% if entity.countchild != 0 %}
+            <button id="category_{{entity.id}}" value="+" onclick="searchcatsub({{entity.id}});return false;" class="btn btn-default btn-number btn-sm">
+                <span class="iconcat icplus">+</span>
+            </button>
+            {% else %}
+            <span class="empty33"></span>    
+            {% endif %}
+            </div>
+            
+            <div class="li-content">
+            {{ entity.title }}
+            </div>
+            
+            
+            <div class="li-content-button">
+            <a href="{{ path('admin_category_new', { 'id': entity.id })}}">
+            <button type="button" class="btn btn-default btn-sm">new</button>
+            </a>
+            </div>
+            
+                  
+            <div class="li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button  {% if entity.countchild <= 1 %} disabled {% endif %} type="button" class="btn btn-default btn-sm" onclick="sortcategory({{entity.id}})">sort</button>
+                </div>
+            </div>
+                
+            <div class="li-content-button">
+            <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">
+            <button type="button" class="btn btn-default btn-sm">edit</button>
+            </a>
+            </div>
+            
+       
+            <div class="li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button  {% if entity.countchild > 0 %} disabled {% endif %}  type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},{{entity.countchild}},'{{ entity.title }}',{{entity.count}})">delete</button>
+                </div>
+            </div>
+      
+                
+            <br>
+            <div id="categorysub_{{entity.id}}" class="li-content-both"> </div>
+            <div class="height10"></div>
+        </li>
+        {% endfor %}
+    
+    {% else %}
+        <li>Категорий нет. </li>
+    {% endif %} 
+         
+        <br>    
+        <br>
+           
+    </li>
+    </div>
+
+    </ul>

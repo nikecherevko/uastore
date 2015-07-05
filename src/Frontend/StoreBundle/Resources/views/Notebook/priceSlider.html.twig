@@ -1,0 +1,23 @@
+<div class="properties_block">
+    <div class="block_title">Цена</div>
+    <div class="inpt">
+        <input id="min_price" type="text" onkeypress="return intInput(event);" onkeyup="return intInput(event);" value="{{pricemin}}" name="pricemin">
+    </div>
+    <span class="mdash">—</span>
+    <div class="inpt">
+        <input id="max_price" type="text" onkeypress="return intInput(event);" onkeyup="return intInput(event);" value="{{pricemax}}" name="pricemax">
+    </div>
+    <span class="grn">грн.</span>
+    <div class="clr"></div>
+    <div id="price_slider"></div>
+</div> 
+
+
+<script>
+    var minprice = {{ pricemin|json_encode|raw }};
+    var maxprice = {{ pricemax|json_encode|raw }};
+</script>
+<script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('js/price-slider.js') }}"></script>
+
+ 

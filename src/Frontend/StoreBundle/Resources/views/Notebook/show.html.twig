@@ -1,0 +1,591 @@
+{% extends "FrontendPanelBundle::main.html.twig" %}
+
+{% block title %} Ноутбук {{entity.manufacturer}} {{entity.model}} купить - UA Store™ {% endblock %}
+
+{% block stylesheets %} 
+    <link href="{{ asset('bundles/frontendstore/css/index.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/frontendstore/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminnotebook/css/fotorama.css') }}" rel="stylesheet" /> 
+{% endblock %}
+ 
+{% block body -%}
+<div id="popup_window"> </div>
+<div class="callback_form"> </div>
+
+<div class="toolbar">
+    <div class="toolbar_container">
+        <div class="text">Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</div>
+        <div class="text prices">
+            <span class="tol-price">{{entity.price|number_format(0, '.', ' ')}}</span>
+            <span class="currency"><i>грн.</i></span>            
+        </div>
+        <div class="act-button">
+            <button type="button" class="btn btn-danger btn-xs" onclick="doCart({{entity.id}});">Купить</button>
+        </div>
+        <div class="clr"></div>    
+    </div>
+</div>
+        
+<div class="box box-primary" >
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        <div class="product_detail">
+                <h1>Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</h1>
+                <div class="product_code"> Код: {{entity.code}} </div>
+                <div class="clr"></div>
+                <div class="img_part">
+                    <div class="position" id="fixed" >
+                        <div class="img_part_big"> 
+                            <div class="fotorama" data-nav="thumbs">
+                                
+                                    {% if entityimage|length > 1 %}
+                                        {% for entityimg in entityimage %}
+                                        <a href="{{ asset('images/notebook/'~entityimg.image)}}">
+                                            <img  src="{{ asset('images/notebook/'~entityimg.image) | apply_filter('widthlogo200') }}"  alt="logo" />
+                                        </a>
+                                        {% endfor %}
+                                    {% else %}    
+                                        <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('widthlogo200') }}"  alt="logo" />
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <div class="info">
+                    <table class="info_table">
+                    <colgroup>
+                    <col style="width: 280px;">
+                    <col style="width: 35px;">
+                    <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td class="left_count available">Наличие гарантировано</td>
+                        <td class="spacer" rowspan="3"> </td>
+                        <td class="right_block" rowspan="3">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="warranty_block">
+                                        <div>
+                                            <ul class="ul">
+                                                <li class="delivery">
+                                                    <div class="titlep">Быстрая доставка</div>
+                                                    <div class="descr">
+                                                    <p>
+                                                    В любой уголок
+                                                    <strong class="black">Украины:</strong>
+                                                    <br>
+                                                    — Самовывоз Новая Почта -
+                                                    <span class="bold black up">бесплатно!</span>
+                                                    <br>
+                                                    — Курьер Новая Почта -
+                                                    <span class="bold black up">бесплатно!</span>
+                                                    <br>
+                                                    — Курьер «Міст Експрес» -
+                                                    <span class="bold black up">бесплатно!</span>
+                                                    </p>
+                                                    <p>
+                                                    <strong class="black">Киев</strong>
+                                                    и пригород:
+                                                    <br>
+                                                    — Курьер -
+                                                    <s>50.00 грн.</s>
+                                                    <span class="up bold black">бесплатно!</span>
+                                                    <br>
+                                                    — Самовывоз -
+                                                    <span class="up bold black">бесплатно!</span>
+                                                    <br>
+                                                    — Пункт Новой Почты -
+                                                    <span class="up bold black">бесплатно!</span>
+                                                    <br>
+                                                    — Почтомат InPost -
+                                                    <s>18.00 грн.</s>
+                                                    <span class="up bold black">бесплатно!</span>
+                                                    </p>
+                                                    <span class="icon"></span>
+                                                    </div>
+                                                </li>
+                                                <li class="product_back">
+                                                    <div class="titlep">30 дней на обмен</div>
+                                                    <div class="descr">
+                                                    без лишних вопросов. Почитайте
+                                                    <span class="ajax_link">условия возврата</span>
+                                                    </div>
+                                                    <span class="icon"></span>
+                                                </li>
+                                                <li class="warranty">
+                                                    <div class="titlep">12 месяцев гарантии</div>
+                                                    <div class="descr">официальной от производителя</div>
+                                                    <span class="icon"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="price_block">
+                            <div class="price_block_container">
+                                <div class="priced">
+                                    <span class="main">
+                                    {{entity.price|number_format(0, '.', ' ')}}
+                                    <span class="currency"> грн.</span>
+                                    </span>
+                                </div>
+                                <div class="buy_button">
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="doCart({{entity.id}});">Купить</button>
+                                    <div class="payment_visa">
+                                         Оплатить
+                                        <span class="visa add2cart_4052620" onclick="doCart({{entity.id}});"></span>
+                                        <span class="webmoney add2cart_4052620"></span>
+                                    </div>    
+                                    <div class="clr"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="fast_order_form" id="fastform"> 
+                                <form id="request_callback_form" action="">
+                                    <input id="submitoneclick" class="submit btn btn-orange" type="submit" value="Заказать в 1 клик" onclick="doBuyoneclick({{entity.id}});return false;">
+                                    <input id="buyoneclick" class="buyoneclick" type="tel" placeholder="(0XX) XXX-XX-XX" value="" name="buyoneclick" required>
+                                </form>
+                                <div class="clr"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>    
+  
+                    <div class="clr"></div>
+                    
+                    <div class="detail_tabs_content">
+                    <h2> <b>Характеристики Ноутбука {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</b></h2>
+                    <br>
+                    <div class="params_icons_block">
+                        {% if 'Intel Core i7' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Core i7" src="{{ asset('images/picons/intel_i7.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Core i7</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Core i5' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Core i5" src="{{ asset('images/picons/intel_i5.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Core i5</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Core i3' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Core i3" src="{{ asset('images/picons/intel_i3.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Core i3</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Pentium' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Pentium" src="{{ asset('images/picons/intel_pentium.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Pentium</div>
+                        </div> 
+                        {% endif %} 
+                        
+                        {% if 'Intel Celeron' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Celeron" src="{{ asset('images/picons/intel_celeron.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Celeron</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Atom' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Atom" src="{{ asset('images/picons/intel_atom.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Atom</div>
+                        </div> 
+                        {% endif %}                        
+                        
+                        {% if 'Intel Core M' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Intel Core M" src="{{ asset('images/picons/intel_m.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">Intel Core M</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if 'AMD A10' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="AMD A10" src="{{ asset('images/picons/amd_a10.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">AMD A10</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if 'AMD A8' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="AMD A8" src="{{ asset('images/picons/amd_a8.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">AMD A8</div>
+                        </div> 
+                        {% endif %}                        
+                        
+                        {% if 'AMD A6' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="AMD A6" src="{{ asset('images/picons/amd_a6.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">AMD A6</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if  'AMD A4' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="AMD A4" src="{{ asset('images/picons/amd_a4.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">AMD A4</div>
+                        </div> 
+                        {% endif %}                           
+                        
+                        {% if 'AMD E' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="AMD E" src="{{ asset('images/picons/amd_e.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">AMD E</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.hddType == 'SSD' %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="SSD" src="{{ asset('images/picons/ssd.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">SSD</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.hdmi %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="HDMI" src="{{ asset('images/picons/hdmi.png') }}">
+                            </div>
+                            <div class="params_icons_block_title">HDMI</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.usbTwo %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img width="48" height="48" alt="{{entity.usbTwo}}" src="{{ asset('images/picons/USB20_2.png')   }}">
+                            </div>
+                            <div class="params_icons_block_title">{{entity.usbTwo}} x USB 2.0 </div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.usbThree %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="{{entity.usbThree}}" src="{{ asset('images/picons/USB_30.png')   }}">
+                            </div>
+                            <div class="params_icons_block_title">{{entity.usbThree}} x USB 3.0 </div>
+                        </div>    
+                        {% endif %}
+                        
+                        {% if entity.bluetooth %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="{{entity.bluetooth}}" src="{{ asset('images/picons/bluetooth.png')   }}">
+                            </div>
+                            <div class="params_icons_block_title">Bluetooth </div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.wifi %}    
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_img">
+                            <img  width="48" height="48" alt="Wi-Fi {{entity.wifi}} " src="{{ asset('images/picons/wifi.png')   }}">
+                            </div>
+                            <div class="params_icons_block_title">Wi-Fi {{entity.wifi}}</div>
+                        </div>  
+                        {% endif %}  
+                        <div class="clr"></div>
+                    </div>  
+                        
+                        <div class="table_title full short">
+                            <span>Дисплей</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Размер</td>
+                            <td class="value">{{entity.display}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Разрешение</td>
+                            <td class="value">{{entity.displayResolution}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Поверхность экрана</td>
+                            <td class="value">{{entity.displayCover}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Процессор</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Серия процессора</td>
+                            <td class="value">{{entity.cpuSeries}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Количество ядер</td>
+                            <td class="value">{{entity.cpuCore}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Частота</td>
+                            <td class="value">{{entity.cpuFrequency}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Жесткий диск</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип наколпителя</td>
+                            <td class="value">{{entity.hddType}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Объем наколпителя</td>
+                            <td class="value">{{entity.hddSize}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Оперативная память</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип памяти</td>
+                            <td class="value">{{entity.ramType}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Объем памяти</td>
+                            <td class="value">{{entity.ramSize}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Видеокарта</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Производитель</td>
+                            <td class="value">{{entity.videoadapterManufacturer}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Видеокарта</td>
+                            <td class="value">{{entity.videoadapter}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Тип</td>
+                            <td class="value">{{entity.videoadapterType}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Оптический привод</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Дисковод</td>
+                            <td class="value">{{entity.opticalDrive}}</td>
+                        </tr>
+                        </table>
+                        {% if entity.volume %}
+                        <div class="table_title full short">
+                            <span>Звуковая система</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип</td>
+                            <td class="value">{{entity.volume}}</td>
+                        </tr>
+                        </table>
+                        {% endif %}
+                        
+                        <div class="table_title full short">
+                            <span>Интерфейсы</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Сетевой адаптер</td>
+                            <td class="value">{% if entity.lan %}{{entity.lan}} {% else %} нет {% endif %}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Wi-Fi</td>
+                            <td class="value">{% if entity.wiFi%} {{entity.wiFi}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Bluetooth</td>
+                            <td class="value">{% if entity.bluetooth%} {{entity.bluetooth}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">HDMI</td>
+                            <td class="value">{% if entity.hdmi%} {{entity.hdmi}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">USB 2.0</td>
+                            <td class="value">{% if entity.usbTwo%}  {{entity.usbTwo}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">USB 3.0</td>
+                            <td class="value">{% if entity.usbThree%} {{entity.usbThree}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Мультимедиа</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Веб камера</td>
+                            <td class="value">{{entity.webcam}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Параметры батарей</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Аккумулятор</td>
+                            <td class="value">{{entity.batteries}}</td>
+                        </tr>
+                        {% if entity.batteriesSize %}
+                        <tr class="full">
+                            <td class="name">Емкость аккумулятора</td>
+                            <td class="value">{{entity.batteriesSize}}</td>
+                        </tr>
+                        {% endif %}
+                        </table>
+                        <div class="table_title full short">
+                            <span>Программное обеспечение</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Операционная система</td>
+                            <td class="value">{{entity.os}}</td>
+                        </tr>
+                        </table>
+                        {% if entity.packaging %}
+                        <div class="table_title full short">
+                            <span>Комплект поставки</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Содержимое</td>
+                            <td class="value">{{entity.packaging | nl2br}}</td>
+                        </tr>
+                        </table>
+                         {% endif %}
+                        <div class="table_title full short">
+                            <span>Физические характеристики</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Цвет</td>
+                            <td class="value">{{entity.color}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Вес</td>
+                            <td class="value">{{entity.weight}}</td>
+                        </tr>
+                        {% if entity.size %}
+                        <tr class="full short gray">
+                            <td class="name">Габариты</td>
+                            <td class="value">{{entity.size}}</td>
+                        </tr>
+                        </table>
+                        {% endif %}
+                        {% if entity.additionally %}
+                        <div class="table_title full short">
+                            <span>Дополнительно</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Дополнительно</td>
+                            <td class="value">{{entity.additionally | nl2br}}</td>
+                        </tr>
+                        </table>
+                         {% endif %}
+                        {% if entity.description %}
+                        <div class="table_title full short">
+                            <span>Описание</span>
+                            <i></i>
+                        </div>
+                        <div class="note_description">
+                            {{entity.description | raw}}
+                        </div>    
+                        {% endif %}  
+                    </div>
+                </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+</div>
+                    
+
+<br>
+{% endblock %} 
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/fotorama.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendstore/js/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendstore/js/scroll.js') }}"></script>
+{% endblock %}
+
+

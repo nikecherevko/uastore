@@ -1,0 +1,1 @@
+document.getElementById('admin_notebookbundle_value_file').addEventListener('change', showFile, false);

@@ -1,0 +1,21 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminfinance/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_adminpanel' }) }} 
+<br>
+ {{ render(controller('AdminFinanceBundle:Order:getLatestOrder')) }}
+<div class="clr"> </div>
+
+{{ render(controller('AdminFinanceBundle:Rate:rateMain')) }}
+<div class="col-md-3">
+    {{ render(controller('AdminContactBundle:Callme:getProcess')) }}
+</div>
+{{ render(controller('AdminNotebookBundle:Notebook:getLatest')) }}
+
+{% endblock %}

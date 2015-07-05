@@ -1,0 +1,25 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block contenttitle %}<h1>Категория: {{ entity.category }}</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_info' }) }}     
+<div class="box box-primary">
+    <div class="box-header"><h2> {{ entity.title }}</h2></div>
+    <div class="box-info">  
+        {{ entity.description | raw }}
+        
+    </div>
+
+</div>
+        <div class="li-content">
+           <div>   
+               <a href="{{ path('admin_info_page_edit', {'id': entity.id}) }}">
+                   <button type="button" class="btn btn-primary btn-sm">Редактировать</button>
+               </a> 
+           </div>
+        </div>
+        <br>
+        <br>
+        <br>
+{% endblock %} 

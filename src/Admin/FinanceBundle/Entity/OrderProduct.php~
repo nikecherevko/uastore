@@ -1,0 +1,41 @@
+<?php
+
+namespace Admin\FinanceBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="order_product")
+ * @ORM\Entity(repositoryClass="Admin\FinanceBundle\Repository\OrderProductRepository")
+ */
+class OrderProduct
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    /**
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderproducts")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     */
+    protected $order;
+    /**
+     * @ORM\ManyToOne(targetEntity="Admin\CategoryBundle\Entity\Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Admin\NotebookBundle\Entity\Notebook")
+     * @ORM\JoinColumn(name="notebook_id", referencedColumnName="id")
+     */
+    protected $notebook;
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $count;
+
+}

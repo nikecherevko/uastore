@@ -1,0 +1,24 @@
+input[type="checkbox"] {
+    display: none;
+}
+input[type="checkbox"] + label {
+    cursor: pointer;
+    padding-left: 0;
+}
+input[type="checkbox"] + label::before {
+    content: "";
+    display: inline-block;
+    height: 22px;
+    width: 24px;
+    margin: 0 5px 0 0;
+    background: url("../images/checkboxes2.png");
+}
+
+input[type="checkbox"]:hover + label::before {
+    background: url("../images/checkboxes3.png");
+}
+ 
+input[type="checkbox"]:checked + label::before {
+    background-position: 0 -22px;
+}
+

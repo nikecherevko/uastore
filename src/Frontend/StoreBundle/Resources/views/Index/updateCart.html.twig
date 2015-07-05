@@ -1,0 +1,30 @@
+{% if count == 0 %}
+    <div class="icon">
+        <i></i>
+        <span class="cnt">0</span>
+    </div> 
+    <div class="block_title">Корзина</div>
+    <div class="subtitle">
+    Покупайте и
+    <br>
+    собирайте бонусы
+    </div>
+{% else %}
+
+<div class="icon full">
+    <a href="{{ path("mycart")}}"><i></i>
+    <span class="cnt">{{ count }}</span></a>
+</div>    
+<div class="block_title">
+    <a href="{{ path("mycart")}}">В корзине</a>
+</div>    
+<div class="subtitle">
+    <div class="count">{{ count }} товар</div>
+    <div class="sum">
+    на сумму {{sum|number_format(0, '.', ' ')}}
+    <span class="currency"> грн.</span>
+    </div>
+</div>   
+    
+<div class="clr"></div>
+{% endif %}

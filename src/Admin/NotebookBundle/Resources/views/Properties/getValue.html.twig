@@ -1,0 +1,35 @@
+<ul class="ul-treefree">
+{% if entities %}
+    {% for entity in entities %}
+        <li id="li-container{{entity.id}}"> 
+        <div class="li-content-container-sub">
+            {% if entity.image %}
+            <div  class="li-content-logo">
+                <img  src="{{ asset('uploads/notebook/value/'~entity.image) | apply_filter('widthlogo50') }}" height="25" alt="logo" />
+            </div>
+            {% endif %}
+            <div class="li-content-sub">
+                <b>{{ entity.value }}</b>
+            </div> 
+            <div class="li-content-button-sub">
+                <a href="{{ path('admin_notebook_value_edit', { 'id': entity.id }) }}">
+                    <button type="button" class="btn btn-default btn-sm">edit</button>
+                </a>
+            </div> 
+            <div class="item-li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},'{{ entity.value }}',0)">delete</button>
+                </div>
+            </div>
+            <br>
+            <div id="categorysub_{{id}}" class="li-content-both-sub"> </div>
+        </div>
+        </li>          
+    {% endfor %}
+{% else %}
+    <div class="categorysub"> 
+        <small>У данной категории нету фильтров.</small>
+    </div>
+{% endif %}
+</ul>
+<br> 

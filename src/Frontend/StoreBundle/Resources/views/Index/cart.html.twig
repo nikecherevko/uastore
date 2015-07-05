@@ -1,0 +1,66 @@
+<span id="popup_close" onclick="popup_window_close(); return false;"></span>
+<div id="popup_content">
+    <div class="add2cart_window">
+        <div class="white_part">
+            <div class="window_title">
+                <span class="icon"></span>
+                <a href="{{ path("mycart")}}">{{product.coun}} товара</a>
+                на сумму {{product.summ|number_format(0, '.', ' ')}}
+                <span class="currency"> грн.</span>
+            </div>    
+                 <table class="tovar">
+                <tbody>
+                <tr>
+                <td class="left">
+                <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('heighten') }}"  alt="logo" />
+                </td>
+                <td class="right">
+                <div class="title">Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</div>
+                <div class="count_choise">
+                <span class="total_summ">
+                    {{entity.price|number_format(0, '.', ' ')}}
+                <span class="currency"> грн.</span>
+                </span>
+                </div>
+                </td>
+                </tr>
+                <tr>
+                <td class="left">
+                <a class="btn" href="{{ path("mycart")}}">Оформить заказ</a>
+                </td>
+                <td class="right">
+                <div class="back_to_shop">
+                    <a onclick="popup_window_close(); return false;" href="#">продолжить покупки</a>
+                </div>
+                <p class="rettext">товар сохранится в корзине</p>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>    
+        <div id="buy_back_call_form" class="gray_part">
+            <p class="title">Заказать без оформления</p>
+            <p class="subtitle">Можно не заполнять никаких форм, просто оставить телефон и консультант решит все вопросы по оформлению заказа.</p>
+            <div class="back_call_form">
+                <input id="teleph" class="customerphone" type="tel" placeholder="+38 (0XX) XXX-XX-XX" value="" name="customerphone" required >
+                <button id="buy_back_call_submit" disabled type="button" class="btn btn-default bt-cart" onclick="doOrder();">Жду звонка</button>
+                <div class="clr"></div>
+            </div>    
+            <p class="phone-example">например: +38 (050) 555-77-77</p>
+            <p class="phone-error">пожалуйста, проверьте правильность кода города или мобильного оператора</p>
+        </div>    
+    </div>    
+</div>    
+                
+
+{% block javascripts %}
+    <script type="text/javascript">
+        jQuery(function($){
+            $(".customerphone").mask("+38 (099) 999-99-99",{completed:function(){
+                    $('#buy_back_call_submit').removeAttr("disabled").removeClass().addClass('btn btn-danger btn-xcar');
+                }});
+
+        });
+    </script>
+{% endblock %}  
+ 

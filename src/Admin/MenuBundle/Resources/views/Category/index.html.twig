@@ -1,0 +1,99 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminmenu/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Меню</h1>{% endblock %}
+
+{% block body -%}
+    
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_menu' }) }}    
+
+<div class="box box-primary">
+    <div class="box-header"><h2>Список категорий</h2></div>
+        <div class="box-info">
+            <div id="boxindex">    
+                {% for flashMessage in app.session.flashbag.get('notice_success') %}
+                <div id="notice-box" class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+                {% endfor %}    
+                <ul>    
+                    {% if entities %}
+                    {% for entity in entities %}
+                    <li id="li-container{{entity.id}}"> 
+                        <div class="li-content-container">    
+                            <div class="li-content-plus"> 
+                                <button id="category_{{entity.id}}" value="+" onclick="searchcatsub({{entity.id}});return false;" class="btn btn-default btn-number btn-sm">
+                                    <span class="iconcat icplus">+</span>
+                                </button>
+                            </div>
+                            <div class="li-content">{{ entity.name }}</div>
+                            <div class="li-content-button">
+                                <a href="{{ path('admin_menu_newmenusub', { 'id': entity.id })}}">
+                                    <button type="button" class="btn btn-default btn-sm">new</button>
+                                </a>
+                            </div>
+                            <div class="li-content-button">
+                                <div class="confitem{{entity.id}}">
+                                    <button type="button" class="btn btn-default btn-sm" onclick="sortcategory({{entity.id}},0)">sort</button>
+                                </div>
+                            </div>
+                            <div class="li-content-button">
+                                <a href="{{ path('admin_menu_category_edit', { 'id': entity.id }) }}">
+                                    <button type="button" class="btn btn-default btn-sm">edit</button>
+                                </a>
+                            </div>
+                            <div class="li-content-button">
+                                <div class="confitem{{entity.id}}">
+                                    <button  type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},'{{ entity.name }}',1)">delete</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="categorysub_{{entity.id}}" class="li-content-both"> </div>
+                            <div class="height10"></div>
+                        </div>    
+                    </li>
+                    {% endfor %}
+
+                    {% else %}
+                        <li>Категорий нет. </li>
+                    {% endif %} 
+                </ul>
+            </div>  
+            <br>
+            <div class="li-content">
+                <div>   
+                    <a href="{{ path('admin_menu_category_new', {'id': 0}) }}">
+                        <button type="button" class="btn btn-primary btn-sm">Создать категорию </button>
+                    </a> 
+                </div>
+            </div> 
+
+            <div class="li-content">
+                <div>
+                    <button type="button" class="btn btn-default btn-sm" onclick="sortcategory(0,1)">Сортировать главный каталог</button>
+                </div>
+            </div>     
+
+            <div id="dialog">            
+                <div id="sortcat"></div>
+            </div> 
+        </div>  
+        <br> 
+        <br> 
+</div>    
+                    
+                
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminmenu/js/confirm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminmenu/js/sortcategorysave.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminmenu/js/searchmenusub.js') }}"></script>
+{% endblock %}
+
+
+
+ 

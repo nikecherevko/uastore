@@ -1,0 +1,19 @@
+<div>
+    {% if entities == false %}
+        <i>Ничего не найдено!</i>
+    {% else %} 
+        <ul class="ul">
+        {% for entity in entities%}
+            <li>
+                <a  href="{{ path('notebook_show', {'id': entity.id, 'slug':'notebook'} )}}">
+                <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('heightlogo20') }}"  alt="logo" />
+                <span class="pricesearch">{{entity.price|number_format(0, '.', ' ')}} <i> грн.</i></span>
+                <b>{{entity.manufacturer}}</b>
+                {{entity.model}} {{entity.coloreng}}
+                </a>
+                <div class="clr"></div>
+            </li>
+        {% endfor %}   
+        </ul> 
+    {% endif %}    
+</div>    

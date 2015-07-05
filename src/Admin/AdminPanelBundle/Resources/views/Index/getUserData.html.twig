@@ -1,0 +1,29 @@
+<div class="user-panel">
+    <div class="pull-left image">
+        <img  class="img-circle" src="{{ asset('uploads/user/'~photo)}}" alt="User Image"   />
+    </div>
+    <div class="pull-left info">
+        <p>{{ name }}</p>
+        <a href="#">
+            <i class="fa-online"></i>
+            Online
+        </a>
+    </div>
+</div>   
+        
+<form action="{{ path('admin_notebook_search') }}" method="post" class="sidebar-form">
+    <div class="input-group">
+        <input class="form-control" type="text" placeholder="Введите код..." name="code">
+        <span class="input-group-btn" >
+            <button id="search-btn" class="btn btn-flat" name="search" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+        <div class="header-search-category">
+            <select name="category">
+                <option value="0" >Товар</option>
+                <option value="1">Заказ</option>
+            </select>
+        </div>
+    </div>
+</form>    

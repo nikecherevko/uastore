@@ -1,0 +1,150 @@
+body {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+.login-page, .register-page {
+    background: #d2d6de none repeat scroll 0 0;
+}
+
+.login-box, .register-box {
+    margin: 7% auto;
+    width: 360px;
+}
+
+.login-logo, .register-logo {
+    font-size: 35px;
+    font-weight: 300;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.login-box-body, .register-box-body {
+    background: #fff none repeat scroll 0 0;
+    border-top: 0 none;
+    color: #666;
+    padding: 20px;
+}
+
+.login-logo a, .register-logo a {
+    color: #444;
+    text-decoration: none;
+}
+
+.login-box-msg, .register-box-msg {
+    margin: 0;
+    padding: 0 20px 20px;
+    text-align: center;
+}
+
+ 
+.form-group {
+    margin-bottom: 15px;
+}
+
+ 
+.login-box-body .form-control-feedback, .register-box-body .form-control-feedback {
+    color: #777;
+}
+.form-control-feedback {
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 34px;
+    z-index: 2;
+
+} 
+.form-control {
+    border-color: #d2d6de;
+    border-radius: 0 !important;
+    box-shadow: none;
+}
+.form-control::-moz-placeholder {
+    color: #bbb;
+    opacity: 1;
+}
+
+
+.admin-form-input input[type="text"], .admin-form-input input[type="email"],
+.admin-form-input input[type="password"]{
+    width: 320px;
+}
+
+
+.glyphicon-lock::before {
+    content: url("/images/icon/lock.png");
+}
+
+.glyphicon-user::before {
+    content: url("/images/icon/user.png");
+}
+
+ 
+.checklogin {
+    float: left;
+    width: 30px;
+}
+
+.checklabel {
+    float: left;
+    font-size: 0.9em;
+    width: 220px;
+    padding-top: 3px;
+    
+}
+
+.checklabelr {
+    float: left;
+    font-size: 0.9em;
+    width: 210px;
+    padding-top: 3px;
+    
+}
+
+.checksubmit {
+    float: left;
+}  
+
+
+.box.box-primary {
+    border-top-color: #605ca8;
+}
+.btn .btn-primary {
+    background: none;
+}
+
+.btn-primary {
+    background-color: #605ca8;
+    border-color: #555299;
+    color: #fff;
+    border-radius: 0px;
+    
+}
+
+
+.btn-primary:hover {
+    background-color: #555299;
+}
+
+.btn-primary:focus{
+    background-color: #605ca8;
+} 
+
+.btn-primary:active{
+    background-color: #555299;
+} 
+.btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary.active[disabled], .btn-primary.focus[disabled], .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background-color: #605ca8;
+    border-color: #555299;
+}

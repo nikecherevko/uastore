@@ -1,0 +1,11 @@
+{% if images %}
+    {% for image in images%}
+
+    <li id="image-{{image.id}}"   class="edit-img-note {% if image.main%}active-edit{% endif%}">
+        <div class="edit-note-di">
+            <img  src="{{ asset('images/icon/delete-icon.png')}}" onclick="confirmdeletenotebookimage({{image.id}},{% if image.main%}1{%else%}0{% endif%},{{noteid}})" title="Удалить"/>
+        </div>
+        <img  src="{{ asset('images/notebook/'~image.image)}}" width='170px' />
+    </li>
+    {% endfor %}    
+{% endif %}

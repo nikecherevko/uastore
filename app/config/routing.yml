@@ -1,0 +1,87 @@
+frontend_store:
+    resource: "@FrontendStoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+frontend_panel:
+    resource: "@FrontendPanelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_adminpanel:
+    resource: "@AdminAdminPanelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_notebook:
+    resource: "@AdminNotebookBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_category:
+    resource: "@AdminCategoryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_common:
+    resource: "@AdminCommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin_finance:
+    resource: "@AdminFinanceBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin_admin_panel:
+    resource: "@AdminAdminPanelBundle/Controller/"
+    type:     annotation
+    prefix:   /
+ 
+admin_contact:
+    resource: "@AdminContactBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin_user:
+    resource: "@AdminUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_info:
+    resource: "@AdminInfoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+admin_menu:
+    resource: "@AdminMenuBundle/Controller/"
+    type:     annotation
+    prefix:   /    
+ 
+# FOSUserBundle
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile    
+# end
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+_imagine:
+    resource: .
+    type:     imagine

@@ -1,0 +1,350 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminnotebook/css/fotorama.css') }}" rel="stylesheet" /> 
+{% endblock %}
+
+{% block contenttitle %}<h1>Ноутбук</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_notebook' }) }} 
+
+<div class="toolbar">
+    <div class="toolbar_container">
+        <div class="text">Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</div>
+        <div class="act-button">
+            <a href="{{ path('admin_notebook_newmodification', {'id': entity.id}) }}">
+                <button type="button" class="btn btn-success btn-xs">+ Модификация</button>
+            </a>                
+        </div>     
+        <div class="act-button">
+            <a href="{{ path('admin_notebook_edit', {'id': entity.id}) }}">
+                <button type="button" class="btn btn-warning btn-xs">Редактировать</button>
+            </a>                
+        </div> 
+        <div class="act-button">
+            <button type="button" class="btn btn-danger btn-xs" onclick="confirmdeletenotebook({{entity.id}})">Удалить</button>
+        </div>
+        <div class="clr"></div>    
+    </div>
+</div>
+
+<div class="box box-primary">
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        <div class="product_detail">
+            <div class="order-new" id="addtocartnote">
+                <button type="button" class="btn btn-primary btn-sm"  onclick="doCart({{entity.id}});">Добавить в заказ</button>
+            </div> 
+                <h1>Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</h1>
+                <div class="product_code"> Код: {{entity.code}} </div>
+                <div class="clr"></div>
+                <div class="img_part">
+                    <div class="position" id="fixed" >
+                        <div class="img_part_big"> 
+                            <div class="fotorama" data-nav="thumbs">
+                                
+                                    {% if entityimage|length > 1 %}
+                                        {% for entityimg in entityimage %}
+                                        <a href="{{ asset('images/notebook/'~entityimg.image)}}">
+                                            <img  src="{{ asset('images/notebook/'~entityimg.image) | apply_filter('heighten') }}"  alt="logo" />
+                                        </a>
+                                        {% endfor %}
+                                    {% else %}    
+                                        <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('widthlogo300') }}"  alt="logo" />
+                                    {% endif %}
+                            </div>
+                        </div>
+                        <div class="act-button">
+                        <span class="price">
+                            <b>Цена:</b> 
+                            {{entity.price|number_format(0, '.', ' ')}}
+                            <span class="currency"> грн.</span>
+                        </span>
+                        </div>     
+                    </div>    
+                </div>
+                <div class="info">
+                    <div class="detail_tabs_content">
+                        <div class="clear properties tab_div">
+                            <h2>Характеристики {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</h2>
+                        </div>
+                        <div class="table_title full short">
+                            <span>Дисплей</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Размер</td>
+                            <td class="value">{{entity.display}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Разрешение</td>
+                            <td class="value">{{entity.displayResolution}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Поверхность экрана</td>
+                            <td class="value">{{entity.displayCover}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Процессор</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Серия процессора</td>
+                            <td class="value">{{entity.cpuSeries}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Количество ядер</td>
+                            <td class="value">{{entity.cpuCore}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Частота</td>
+                            <td class="value">{{entity.cpuFrequency}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Жесткий диск</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип наколпителя</td>
+                            <td class="value">{{entity.hddType}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Объем наколпителя</td>
+                            <td class="value">{{entity.hddSize}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Оперативная память</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип памяти</td>
+                            <td class="value">{{entity.ramType}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Объем памяти</td>
+                            <td class="value">{{entity.ramSize}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Видеокарта</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Производитель</td>
+                            <td class="value">{{entity.videoadapterManufacturer}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Видеокарта</td>
+                            <td class="value">{{entity.videoadapter}}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Тип</td>
+                            <td class="value">{{entity.videoadapterType}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Оптический привод</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Дисковод</td>
+                            <td class="value">{{entity.opticalDrive}}</td>
+                        </tr>
+                        </table>
+                        {% if entity.volume %}
+                        <div class="table_title full short">
+                            <span>Звуковая система</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Тип</td>
+                            <td class="value">{{entity.volume}}</td>
+                        </tr>
+                        </table>
+                        {% endif %}
+                        
+                        <div class="table_title full short">
+                            <span>Интерфейсы</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Сетевой адаптер</td>
+                            <td class="value">{% if entity.lan %}{{entity.lan}} {% else %} нет {% endif %}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Wi-Fi</td>
+                            <td class="value">{% if entity.wiFi%} {{entity.wiFi}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">Bluetooth</td>
+                            <td class="value">{% if entity.bluetooth%} {{entity.bluetooth}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">HDMI</td>
+                            <td class="value">{% if entity.hdmi%} {{entity.hdmi}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">USB 2.0</td>
+                            <td class="value">{% if entity.usbTwo%}  {{entity.usbTwo}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        <tr class="full short gray">
+                            <td class="name">USB 3.0</td>
+                            <td class="value">{% if entity.usbThree%} {{entity.usbThree}} {% else %} нет  {% endif %}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Мультимедиа</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Веб камера</td>
+                            <td class="value">{{entity.webcam}}</td>
+                        </tr>
+                        </table>
+                        <div class="table_title full short">
+                            <span>Параметры батарей</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Аккумулятор</td>
+                            <td class="value">{{entity.batteries}}</td>
+                        </tr>
+                        {% if entity.batteriesSize %}
+                        <tr class="full">
+                            <td class="name">Емкость аккумулятора</td>
+                            <td class="value">{{entity.batteriesSize}}</td>
+                        </tr>
+                        {% endif %}
+                        </table>
+                        <div class="table_title full short">
+                            <span>Программное обеспечение</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Операционная система</td>
+                            <td class="value">{{entity.os}}</td>
+                        </tr>
+                        </table>
+                        {% if entity.packaging %}
+                        <div class="table_title full short">
+                            <span>Комплект поставки</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Содержимое</td>
+                            <td class="value">{{entity.packaging | nl2br}}</td>
+                        </tr>
+                        </table>
+                         {% endif %}
+                        <div class="table_title full short">
+                            <span>Физические характеристики</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Цвет</td>
+                            <td class="value">{{entity.color}}</td>
+                        </tr>
+                        <tr class="full">
+                            <td class="name">Вес</td>
+                            <td class="value">{{entity.weight}}</td>
+                        </tr>
+                        {% if entity.size %}
+                        <tr class="full short gray">
+                            <td class="name">Габариты</td>
+                            <td class="value">{{entity.size}}</td>
+                        </tr>
+                        </table>
+                        {% endif %}
+                        {% if entity.additionally %}
+                        <div class="table_title full short">
+                            <span>Дополнительно</span>
+                            <i></i>
+                        </div>
+                        <table>
+                        <tbody>
+                        <tr class="full short gray">
+                            <td class="name">Дополнительно</td>
+                            <td class="value">{{entity.additionally | nl2br}}</td>
+                        </tr>
+                        </table>
+                         {% endif %}
+                        {% if entity.description %}
+                        <div class="table_title full short">
+                            <span>Описание</span>
+                            <i></i>
+                        </div>
+                        <div class="note_description">
+                            {{entity.description | raw}}
+                        </div>    
+                        {% endif %}                        
+                    </div>
+                </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+ 
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/confirm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/setinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/fotoupload.js') }}"></script>
+    <script type="text/javascript">
+	$(function() {
+		var offset = $("#fixed").offset();
+		var topPadding = 80;
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > offset.top) {
+				$('#fixed').css({'position': 'fixed', 'top':'80px', 'z-index':'10'});
+                                $(".toolbar").css('display', 'block');
+            
+			}
+			else {
+                            $('#fixed').css({'position': 'static'});
+                            $(".toolbar").css('display', 'none');
+                        }
+        ;});
+                                
+	});
+        
+         
+        
+        
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/fotorama.js') }}"></script>
+{% endblock %}

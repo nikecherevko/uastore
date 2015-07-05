@@ -1,0 +1,47 @@
+<?php
+
+namespace Admin\CommonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="color")
+ * @UniqueEntity(
+ *     fields={"hex"},
+ *     errorPath="hex",
+ *     message="Такой цвет уже существует."
+ * )
+ */
+class Color
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $nameru;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $nameeng;    
+    
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $hex;    
+
+    
+}

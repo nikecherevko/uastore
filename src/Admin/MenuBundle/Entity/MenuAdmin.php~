@@ -1,0 +1,70 @@
+<?php
+
+namespace Admin\MenuBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="menu_admin")
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     errorPath="title",
+ *     message="Категория с таким названием уже существует."
+ * )
+ */
+class MenuAdmin
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $parent_id;
+    
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage = "Минимальное количество 2 символа",
+     * )
+     */
+    protected $title;
+        
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $position;
+    
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $countchild;
+    
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage = "Минимальное количество 2 символа",
+     * )
+     */
+    protected $path;
+
+
+
+    
+}

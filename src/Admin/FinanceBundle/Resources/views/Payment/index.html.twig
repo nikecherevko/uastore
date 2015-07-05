@@ -1,0 +1,66 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminfinance/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Финансы</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_finance' }) }}   
+<div class="box box-primary">
+    <div class="box-header"><h2>Способы оплаты</h2></div>
+    <div class="box-info">
+        <div id="boxindex">    
+            {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}    
+            <ul>    
+                {% if entities %}
+                {% for entity in entities %}
+                <li id="li-container{{entity.id}}"> 
+                    <div class="li-content-container">    
+                        <div class="li-content">
+                            {{ entity.name }}
+                            <span class="label pull-right bg-red">{{ entity.rate }}</span>
+                        </div>
+                        <div class="li-content-button">
+                            <a href="{{ path('admin_finance_payment_edit', { 'id': entity.id }) }}">
+                                <button type="button" class="btn btn-default btn-sm">edit</button>
+                            </a>
+                        </div>
+                        <div class="li-content-button">
+                            <div class="confitem{{entity.id}}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},1)">delete</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div id="categorysub_{{entity.id}}" class="li-content-both"> </div>
+                        <div class="height10"></div>
+                    </div>    
+                </li>
+                {% endfor %}
+                {% else %}
+                    <li>Способов оплаты нет. </li>
+                {% endif %} 
+            </ul>
+        </div>  
+        <br>
+        <div class="li-content">
+            <div>   
+                <a href="{{ path('admin_finance_payment_new') }}">
+                    <button type="button" class="btn btn-primary btn-sm">Создать способ оплаты</button>
+                </a> 
+            </div>
+        </div> 
+    </div>  
+    <br> 
+    <br> 
+</div>    
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminfinance/js/confirm.js') }}"></script>
+{% endblock %}

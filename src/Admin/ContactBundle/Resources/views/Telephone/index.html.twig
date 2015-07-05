@@ -1,0 +1,72 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/admincontact/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Телефоны магазина</h1>{% endblock %}
+
+{% block body -%}
+    
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_contact' }) }}   
+
+<div class="col-md-4">
+    <div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">Список</h3>
+    </div>
+    <div class="box-body no-padding">
+        <ul class="nav nav-pills nav-stacked">
+            
+            {% for flashMessage in app.session.flashbag.get('notice_success') %}
+                <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+                </div>
+            {% endfor %} 
+            
+            {% if entities %}
+            {% for entity in entities %}
+            <li id="telephone{{entity.id}}">
+                <div class="li-content-container">  
+                    <div  class="li-content-logo">
+                        <img  src="{{ asset('uploads/admincontact/'~entity.image)}}" alt="logo"   />
+                    </div>
+                    <div  class="li-content-telephone">{{entity.telephone}}</div>
+                    <div class="li-content-button">
+                       <a href="{{ path('admin_contact_telephone_edit', { 'id': entity.id })}}">
+                           <button type="button" class="btn btn-warning btn-xs">edit</button>
+                       </a>
+                    </div>
+                    <div class="li-content-button">
+                        <button type="button" class="btn btn-danger btn-xs" onclick="confirmdelete({{entity.id}})">delete</button>
+                    </div>
+                    <div class="height10"></div>
+                </div>
+            </li>
+            {% endfor %}
+            {% else %}
+               <li>Телефонов нету. </li>
+            {% endif %} 
+        </ul> 
+        
+        <br>
+        <div class="li-content">
+            <div>   
+                <a href="{{ path('admin_contact_telephone_new') }}">
+                    <button type="button" class="btn btn-success btn-xs">Добавить телефон</button>
+                </a> 
+            </div>
+        </div> 
+    </div>
+</div>    
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admincontact/js/confirm.js') }}"></script>
+{% endblock %}
+
+
+
+
+ 

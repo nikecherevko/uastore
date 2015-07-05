@@ -1,0 +1,52 @@
+<ul class="ul-treefree">
+{% if entities %}
+    {% for entity in entities %}
+        <li id="li-container{{entity.id}}"> 
+        <div class="li-content-container-sub">
+            
+            <div class="li-content-sub">
+                {% if entity.countchild != 0 %}
+                <button value="+" id="category_{{entity.id}}" onclick="searchcatsub({{entity.id}});" class="btn btn-default btn-number btn-sm" data-type="plus" >
+                    <span class="iconcat icplus">+</span>
+                </button>
+                {% endif %}
+
+                {{ entity.title }}
+            </div> 
+            
+            <div class="li-content-button">
+                <a href="{{ path('admin_category_new', { 'id': entity.id})}}">
+                    <button type="button" class="btn btn-default btn-sm">new</button>
+                </a>
+            </div>
+             
+            <div class="li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button   {% if entity.countchild <= 1 %} disabled {% endif %} type="button" class="btn btn-default btn-sm" onclick="sortcategory({{entity.id}})">sort</button>
+                </div>
+            </div>
+            
+            <div class="li-content-button-sub">
+                <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">
+                    <button type="button" class="btn btn-default btn-sm">edit</button>
+                </a>
+            </div> 
+            
+            <div class="item-li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},{{entity.countchild}},'{{ entity.title }}',{{entity.count}})">delete</button>
+                </div>
+            </div>
+            <br>
+            <div id="categorysub_{{entity.id}}" class="li-content-both-sub"> </div>
+            </div>
+        </li>          
+    {% endfor %}
+{% else %}
+    <div class="categorysub"> 
+        <small>У данной категории нету под-категории.</small>
+    </div>
+{% endif %}
+</ul>
+<br>
+ 

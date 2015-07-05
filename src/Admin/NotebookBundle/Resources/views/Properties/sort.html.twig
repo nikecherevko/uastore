@@ -1,0 +1,15 @@
+<ul id='categoryorder'>
+    {% if entities %}
+        {% for entity in entities %}
+        <li  id="ID_{{entity.id}}"><i class="fa-table-sort"></i>{{entity.name}}</li>
+        {% endfor %}
+    {% else %}
+        <li>Категорий нет. </li>
+    {% endif %} 
+</ul>
+ 
+<div class="sortcat">
+    <button  type="button" class="btn btn-primary btn-sm" onclick="saveDisplayChanges()">Сохранить</button>
+</div>
+
+<script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/sortproperty.js') }}"></script>         

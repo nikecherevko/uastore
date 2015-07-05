@@ -1,0 +1,570 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% form_theme form 'AdminCommonBundle:Form:fields.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminnotebook/css/form.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Ноутбуки</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_notebook' }) }}    
+<div class="box box-primary">
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        
+        {{ form_start(form) }}
+        
+        <div class="table_title">
+            <span>Добавление модификации ноутбука</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.manufacturer) }} <sup>*</sup> </div>
+                    {{ form_widget(form.manufacturer) }} 
+                    <ul class="icons">
+                        {% for manufacturer in value.1 %}
+                            <li {% if manufacturer.active %} value = "1" class="active-li"{% endif %} id="li-{{manufacturer.id}}"  onclick="setVal('manufacturer','{{manufacturer.value}}',{{manufacturer.id}});">{{manufacturer.value}}</li>
+                            <input {% if manufacturer.active %} value = "{{manufacturer.id}}" {% endif %} id="filtr-{{manufacturer.id}}" type="hidden" name="filtr[{{manufacturer.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.manufacturer) }}</div>
+                </div>
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.model) }} <sup>*</sup> </div>
+                    {{ form_widget(form.model) }} 
+                    <div class="add-note-error">{{ form_errors(form.model) }}</div>
+                </div>   
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.modification) }} </div>
+                    {{ form_widget(form.modification) }} 
+                    <div class="add-note-error">{{ form_errors(form.modification) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.price) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.price)  }} 
+                    <div class="add-note-error">{{ form_errors(form.price) }}</div>
+                </div>  
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.code) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.code) }} 
+                    <div class="add-note-error">{{ form_errors(form.code) }}</div>
+                </div>   
+            </td>
+        <tr>   
+        </table>  
+        <div class="table_title full short">
+            <span>Фото</span>
+            <i></i>
+        </div>            
+     
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="admin-form-input">
+                        <span class="btn btn-default btn-file">    
+                            <span class="label-image">Выберите фото...</span>
+                            <input id="photo" type="file" name="photo[]" multiple>
+                        </span>  
+                    </div>
+                </div>
+            </td>
+            <td class="block-noteadd-right">
+            </td> 
+        </tr>    
+        </table>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-all">
+                <div >
+                    <ul id="list" class="recentList">
+                       
+                    </ul>
+                     <div class="clr"></div>
+                </div>
+            </td>
+        </tr>    
+        </table>    
+                        
+        <div class="table_title">
+            <span>Дисплей</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.display) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.display) }} 
+                    <ul class="icons">
+                        {% for display in value.4 %}
+                            <li {% if display.active %} value = "1" class="active-li"{% endif %} id="li-{{display.id}}" onclick="setVal('display','{{display.value}}',{{display.id}});">{{display.value}}</li>
+                            <input  {% if display.active %} value = "{{display.id}}" {% endif %} id="filtr-{{display.id}}" type="hidden" name="filtr[{{display.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.display) }}</div>
+                </div>      
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.display_resolution) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.display_resolution) }}
+                    <ul class="icons">
+                        {% for display_resolution in value.9 %}
+                            <li {% if display_resolution.active %} value = "1" class="active-li"{% endif %} id="li-{{display_resolution.id}}" onclick="setVal('display_resolution','{{display_resolution.value}}',{{display_resolution.id}});">{{display_resolution.value}}</li>
+                            <input {% if display_resolution.active %} value = "{{display_resolution.id}}" {% endif %} id="filtr-{{display_resolution.id}}" type="hidden" name="filtr[{{display_resolution.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.display_resolution) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.display_cover) }} <sup>*</sup> </div>
+                    {{ form_widget(form.display_cover) }} 
+                    <ul class="icons">
+                        {% for display_cover in value.20 %}
+                            <li {% if display_cover.active %} value = "1" class="active-li"{% endif %} id="li-{{display_cover.id}}" onclick="setVal('display_cover','{{display_cover.value}}',{{display_cover.id}});">{{display_cover.value}}</li>
+                            <input {% if display_cover.active %} value = "{{display_cover.id}}" {% endif %} id="filtr-{{display_cover.id}}" type="hidden" name="filtr[{{display_cover.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.display_cover) }}</div>
+                </div>
+            </td>
+        <tr>   
+        </table>                   
+        <div class="table_title full short">
+            <span>Процессор</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.cpu_series) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.cpu_series) }} 
+                    <ul class="icons">
+                        {% for cpu_series in value.6 %}
+                            <li {% if cpu_series.active %} value = "1" class="active-li"{% endif %}  id="li-{{cpu_series.id}}" onclick="setVal('cpu_series','{{cpu_series.value}}',{{cpu_series.id}});">{{cpu_series.value}}</li>
+                            <input  {% if cpu_series.active %} value = "{{cpu_series.id}}" {% endif %} id="filtr-{{cpu_series.id}}" type="hidden" name="filtr[{{cpu_series.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.cpu_series) }}</div>
+                </div>
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.cpu_frequency) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.cpu_frequency) }} 
+                    <ul class="icons">
+                        {% for cpu_frequency in value.8 %}
+                            <li {% if cpu_frequency.active %} value = "1" class="active-li"{% endif %} id="li-{{cpu_frequency.id}}" onclick="setVal('cpu_frequency','{{cpu_frequency.value}}',{{cpu_frequency.id}});">{{cpu_frequency.value}}</li>
+                            <input  {% if cpu_frequency.active %} value = "{{cpu_frequency.id}}" {% endif %} id="filtr-{{cpu_frequency.id}}" type="hidden" name="filtr[{{cpu_frequency.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.cpu_frequency) }}</div>
+                </div>      
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.cpu_core) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.cpu_core) }} 
+                    <ul class="icons">
+                        {% for cpu_core in value.7 %}
+                            <li {% if cpu_core.active %} value = "1" class="active-li"{% endif %} id="li-{{cpu_core.id}}" onclick="setVal('cpu_core','{{cpu_core.value}}',{{cpu_core.id}});">{{cpu_core.value}}</li>
+                            <input {% if cpu_core.active %} value = "{{cpu_core.id}}" {% endif %} id="filtr-{{cpu_core.id}}" type="hidden" name="filtr[{{cpu_core.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.cpu_core) }}</div>
+                </div>   
+            </td>
+            </td>
+        <tr>   
+        </table> 
+        <div class="table_title">
+            <span>Оперативаня память</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.ram_type) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.ram_type) }} 
+                    <div class="add-note-error">{{ form_errors(form.ram_type) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.ram_size) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.ram_size) }} 
+                    <ul class="icons">
+                        {% for ram_size in value.10 %}
+                            <li {% if ram_size.active %} value = "1" class="active-li"{% endif %} id="li-{{ram_size.id}}" onclick="setVal('ram_size','{{ram_size.value}}',{{ram_size.id}});">{{ram_size.value}}</li>
+                            <input {% if ram_size.active %} value = "{{ram_size.id}}" {% endif %} id="filtr-{{ram_size.id}}" type="hidden" name="filtr[{{ram_size.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.ram_size) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>   
+        <div class="table_title">
+            <span>Жесткий диск</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.hdd_type) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.hdd_type) }} 
+                    <ul class="icons">
+                        {% for hdd_type in value.12 %}
+                            <li {% if hdd_type.active %} value = "1" class="active-li"{% endif %} id="li-{{hdd_type.id}}" onclick="setVal('hdd_type','{{hdd_type.value}}',{{hdd_type.id}});">{{hdd_type.value}}</li>
+                            <input  {% if hdd_type.active %} value = "{{hdd_type.id}}" {% endif %} id="filtr-{{hdd_type.id}}" type="hidden" name="filtr[{{hdd_type.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.hdd_type) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.hdd_size) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.hdd_size) }} 
+                    <ul class="icons">
+                        {% for hdd_size in value.13 %}
+                            <li {% if hdd_size.active %} value = "1" class="active-li"{% endif %} id="li-{{hdd_size.id}}" onclick="setVal('hdd_size','{{hdd_size.value}}',{{hdd_size.id}});">{{hdd_size.value}}</li>
+                            <input {% if hdd_size.active %} value = "{{hdd_size.id}}" {% endif %} id="filtr-{{hdd_size.id}}" type="hidden" name="filtr[{{hdd_size.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.hdd_size) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>            
+        <div class="table_title">
+            <span>Виедокарта</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+     
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.videoadapter_type) }} <sup>*</sup> </div>
+                    {{ form_widget(form.videoadapter_type) }} 
+                    <ul class="icons">
+                        {% for videoadapter_type in value.21 %}
+                            <li {% if videoadapter_type.active %} value = "1" class="active-li"{% endif %} id="li-{{videoadapter_type.id}}" onclick="setVal('videoadapter_type','{{videoadapter_type.value}}',{{videoadapter_type.id}});">{{videoadapter_type.value}}</li>
+                            <input  {% if videoadapter_type.active %} value = "{{videoadapter_type.id}}" {% endif %} id="filtr-{{videoadapter_type.id}}" type="hidden" name="filtr[{{videoadapter_type.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.videoadapter_type) }}</div>
+                </div> 
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.videoadapter_manufacturer) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.videoadapter_manufacturer) }} 
+                    <ul class="icons">
+                        {% for videoadapter_manufacturer in value.11 %}
+                            <li {% if videoadapter_manufacturer.active %} value = "1" class="active-li"{% endif %} id="li-{{videoadapter_manufacturer.id}}" onclick="setVal('videoadapter_manufacturer','{{videoadapter_manufacturer.value}}',{{videoadapter_manufacturer.id}});">{{videoadapter_manufacturer.value}}</li>
+                            <input {% if videoadapter_manufacturer.active %} value = "{{videoadapter_manufacturer.id}}" {% endif %} id="filtr-{{videoadapter_manufacturer.id}}" type="hidden" name="filtr[{{videoadapter_manufacturer.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.videoadapter_manufacturer) }}</div>
+                </div>    
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.videoadapter) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.videoadapter) }} 
+                    <div class="add-note-error">{{ form_errors(form.videoadapter) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>
+        <div class="table_title">
+            <span>Звуковая система</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.volume) }} </div>
+                    {{ form_widget(form.volume) }} 
+                    <div class="add-note-error">{{ form_errors(form.volume) }}</div>
+                </div>  
+            </td>
+            <td class="block-noteadd-right">
+      
+            </td>
+        <tr>   
+        </table>         
+        <div class="table_title">
+            <span>Оптический привод</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.optical_drive) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.optical_drive) }} 
+                    <ul class="icons">
+                        {% for optical_drive in value.14 %}
+                            <li {% if optical_drive.active %} value = "1" class="active-li"{% endif %} id="li-{{optical_drive.id}}" onclick="setVal('optical_drive','{{optical_drive.value}}',{{optical_drive.id}});">{{optical_drive.value}}</li>
+                            <input  {% if optical_drive.active %} value = "{{optical_drive.id}}" {% endif %} id="filtr-{{optical_drive.id}}" type="hidden" name="filtr[{{optical_drive.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.optical_drive) }}</div>
+                </div>  
+            </td>
+            <td class="block-noteadd-right">
+                 
+            </td>
+        <tr>   
+        </table>     
+        <div class="table_title">
+            <span>Порты и Интерфейсы</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.lan) }} </div>
+                    {{ form_widget(form.lan) }} 
+                    <div class="add-note-error">{{ form_errors(form.lan) }}</div>
+                </div>  
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.wi_fi) }} </div>
+                    {{ form_widget(form.wi_fi) }} 
+                    <div class="add-note-error">{{ form_errors(form.wi_fi) }}</div>
+                </div>
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.bluetooth) }} </div>
+                    {{ form_widget(form.bluetooth) }} 
+                    <div class="add-note-error">{{ form_errors(form.bluetooth) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.hdmi) }} </div>
+                    {{ form_widget(form.hdmi) }} 
+                    <div class="add-note-error">{{ form_errors(form.hdmi) }}</div>
+                </div> 
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.usb_two) }} </div>
+                    {{ form_widget(form.usb_two) }} 
+                    <div class="add-note-error">{{ form_errors(form.usb_two) }}</div>
+                </div>
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.usb_three) }} </div>
+                    {{ form_widget(form.usb_three) }} 
+                    <div class="add-note-error">{{ form_errors(form.usb_three) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>             
+        <div class="table_title">
+            <span>Мультимедиа</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.webcam) }} <sup>*</sup> </div>
+                    {{ form_widget(form.webcam) }} 
+                    <div class="add-note-error">{{ form_errors(form.webcam) }}</div>
+                </div>
+            </td>
+            <td class="block-noteadd-right">
+
+            </td>
+        <tr>   
+        </table>
+        <div class="table_title">
+            <span>Параметры батареи</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.batteries) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.batteries) }} 
+                    <div class="add-note-error">{{ form_errors(form.batteries) }}</div>
+                </div>
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.batteries_size) }}   </div>
+                    {{ form_widget(form.batteries_size) }} 
+                    <div class="add-note-error">{{ form_errors(form.batteries_size) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>         
+        <div class="table_title">
+            <span>Программное обеспечение</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.os) }} <sup>*</sup> </div>
+                    {{ form_widget(form.os) }} 
+                    <ul class="icons">
+                        {% for os in value.15 %}
+                            <li {% if os.active %} value = "1" class="active-li"{% endif %} id="li-{{os.id}}" onclick="setVal('os','{{os.value}}',{{os.id}});">{{os.value}}</li>
+                            <input {% if os.active %} value = "{{os.id}}" {% endif %} id="filtr-{{os.id}}" type="hidden" name="filtr[{{os.id}}]">
+                        {% endfor %} 
+                    </ul>   
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.os) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                 
+            </td>
+        <tr>   
+        </table>        
+        <div class="table_title">
+            <span>Физические характеристики</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.color) }} <sup>*</sup>  </div>
+                    {{ form_widget(form.color) }} 
+                    <ul class="icons">
+                        {% for color in value.16 %}
+                            <li {% if color.active %} value = "1" class="active-li"{% endif %} id="li-{{color.id}}" onclick="setVal('color','{{color.value}}',{{color.id}});">{{color.value}}</li>
+                            <input {% if color.active %} value = "{{color.id}}" {% endif %} id="filtr-{{color.id}}" type="hidden" name="filtr[{{color.id}}]">
+                        {% endfor %} 
+                    </ul>  
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.color) }}</div>
+                </div>  
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.size) }} </div>
+                    {{ form_widget(form.size) }}
+                    <div class="add-note-error">{{ form_errors(form.size) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.weight) }} <sup>*</sup></div>
+                    {{ form_widget(form.weight) }} 
+                    <ul class="icons">
+                        {% for weight in value.5 %}
+                            <li {% if weight.active %} value = "1" class="active-li"{% endif %} id="li-{{weight.id}}" onclick="setVal('weight','{{weight.value}}',{{weight.id}});">{{weight.value}}</li>
+                            <input {% if weight.active %} value = "{{weight.id}}" {% endif %} id="filtr-{{weight.id}}" type="hidden" name="filtr[{{weight.id}}]">
+                        {% endfor %} 
+                    </ul>
+                    <div class="clr"></div>
+                    <div class="add-note-error">{{ form_errors(form.weight) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>          
+        <div class="table_title">
+            <span>Количество ноутбуков</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.notebook_count) }} <sup>*</sup> </div>
+                    {{ form_widget(form.notebook_count) }} 
+                    <div class="add-note-error">{{ form_errors(form.notebook_count) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+            </td>
+        <tr>   
+        </table> 
+        <div class="table_title">
+            <span>Доп. информация</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-left">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.packaging) }}  </div>
+                    {{ form_widget(form.packaging) }} 
+                    <div class="add-note-error">{{ form_errors(form.packaging) }}</div>
+                </div> 
+            </td>
+            <td class="block-noteadd-right">
+                <div class="container-notebook-new">
+                    <div class="block_title">{{ form_label(form.additionally) }}  </div>
+                    {{ form_widget(form.additionally) }} 
+                    <div class="add-note-error">{{ form_errors(form.additionally) }}</div>
+                </div> 
+            </td>
+        <tr>   
+        </table>        
+        <div class="table_title">
+            <span>Описание</span>
+            <i></i>
+        </div>
+        <table class="block-noteadd">
+        <tr>   
+            <td class="block-noteadd-all">
+                    {{ form_row(form.description) }}
+            </td>
+        <tr>   
+        </table> 
+        <div class="table_title">
+            <span>
+                <div>
+                    <span>
+                        <input class="btn btn-primary  btn-flat" type="submit" value="Сохранить">
+                    </span>
+                </div>  
+            </span>
+            <i></i>
+        </div>
+        
+        <div class="signup-submit">
+            <div id="fileupload"></div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
+ 
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/confirm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/setinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/adminnotebook/js/fotoupload.js') }}"></script>
+{% endblock %}

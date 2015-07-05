@@ -1,0 +1,16 @@
+.form_row input[type="text"] {
+    width: 30em;
+}
+
+.form_row textarea {
+    width: 30em;
+    height: 20em;
+}
+
+.form_row select {
+    height: 2.3em;
+}
+
+.textarea-page {
+    margin-left: 15em;
+}

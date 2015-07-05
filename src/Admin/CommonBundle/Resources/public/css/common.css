@@ -1,0 +1,109 @@
+.box ul {
+    list-style:none outside none;
+}
+.box ul {
+    padding: 0; /* Убираем поля */
+    margin-left: 0; /* Отступ слева */
+}
+
+/* ul-treefree */
+ul.ul-treefree { padding-left:15px; }
+ul.ul-treefree ul { margin:0; padding-left:15px; }
+ul.ul-treefree li { position:relative; list-style:none outside none; border-left:solid 1px #cccccc; margin:0; padding:7px 0 0 38px; line-height:40px; }
+ul.ul-treefree li:before { content:''; display:block; border-bottom:solid 1px #cccccc; position:absolute; width:37px; height:30px; left:0; top:0; }
+ul.ul-treefree li:last-child { border-left:0 none;}
+ul.ul-treefree li:last-child:before { border-left:solid 1px #cccccc; }
+
+.btn-group-sm > .btn, .btn-sm{
+    border-radius: 0;
+}
+.btn-group-sm > .btn, .btn-xs{
+    border-radius: 0;
+}
+.li-content-plus{
+    width:30px; float:left; margin-right: 5px;
+}
+
+.li-content-button {
+    width:60px; float:left;
+}
+
+.item-li-content-button {
+    width:60px; float:left;
+}
+.li-content {
+    float:left;
+    width: 300px;
+    height: 27px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.li-content-both {
+    clear:left;
+    display: none;
+}
+
+.addcatgeoryform {
+    float:left;
+    display: none;
+    float:left;
+    width: 300px;
+    height: 27px;
+    padding-left: 5px;
+}
+ 
+.li-content-plus-sub{
+    width:30px; float:left;
+}
+
+.li-content-button-sub {
+    width:60px; float:left;
+}
+
+.li-content-sub {
+    float:left;
+    width: 200px;
+    height: 15px;
+    padding-top: 3px;
+}
+
+.li-content-both-sub {
+    clear:left;
+    display: none;
+}
+
+.addcatgeoryform-sub {
+    float:left;
+    display: none;
+    float:left;
+    width: 300px;
+    height: 15px;
+}
+
+.form-control {
+    height: 30px;
+    border-radius: 0px;
+    width: 240px;
+}
+ 
+.iconcat  {
+    font-size: 1.3em;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    position: relative;
+    color: #333333;
+}
+
+.icplus {
+    top: 2px;
+}
+
+.icminus {
+    font-size: 1.4em;
+}
+

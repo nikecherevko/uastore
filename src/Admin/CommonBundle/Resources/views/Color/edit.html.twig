@@ -1,0 +1,46 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% form_theme edit_form 'AdminCommonBundle:Form:fields.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/admincommon/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/admincommon/css/form.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Цвет</h1>{% endblock %}
+
+{% block body -%}
+    
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_common' }) }}     
+    
+<div class="box box-primary">
+    <div class="box-header"><h2>Редактирование цвета</h2></div>
+    <div class="box-info">  
+                    
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        
+        {{ form_start(edit_form) }}
+
+        {{ form_row(edit_form.nameru) }}
+        {{ form_row(edit_form.nameeng) }}
+        {{ form_row(edit_form.hex) }}
+
+        <div class="signup-submit">
+            <span>
+                <input class="btn btn-primary  btn-flat" type="submit" value="Сохранить">
+            </span>
+        </div>   
+
+        {{ form_end(edit_form) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/admincommon/js/jscolor.js') }}"></script>
+{% endblock %}
+

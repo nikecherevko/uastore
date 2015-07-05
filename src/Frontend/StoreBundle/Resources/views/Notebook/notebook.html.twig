@@ -1,0 +1,74 @@
+{% extends "FrontendPanelBundle::main.html.twig" %}
+
+{% block title %} Ноутбуки {{slug}} купить в UA Store™ {% endblock %}
+
+{% block stylesheets %} 
+    <link href="{{ asset('bundles/frontendstore/css/index.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+    <div id="popup_window"> </div>
+    <div class="callback_form"> </div>
+    <br>
+    <div class="main width">
+        <div>
+            <div class="center_wrapper one_col">
+                <div class="center_part">
+                    <div class="box box-primary">
+                        <h1>Ноутбуки</h1> 
+                        <br>
+                        <div class="img_parts">
+                            <div class="properties" id="box_priceslider">
+                                {{ render(controller('FrontendStoreBundle:Notebook:priceSlider'))}}
+                            </div> 
+                            {{ render(controller('FrontendStoreBundle:Notebook:filterList', {'notebookListId': notebookListId})) }}
+                        </div>    
+                        <div class="info_parts">
+                            <div class="list_filters_links">
+                                <ul class="view_type">
+                                    <li class="view_text">Вид списка</li>
+                                    <li class="view_list {% if view == 'list' %}selected{% endif %}" title="список" onclick="if(!$(this).hasClass('selected')) { doView('list'); }return false;">
+                                        <span></span>
+                                    </li>
+                                    <li class="view_table {% if view == 'table' %}selected{% endif %}"   title="таблица" onclick="if(!$(this).hasClass('selected')) { doView('table'); } return false;">
+                                        <span></span>
+                                    </li>
+                                </ul>     
+                                <ul class="sort_links">
+                                    <li>Сортировка:</li>
+                                    <li>
+                                    <a onclick="if(!$(this).parent().hasClass('selected')) { doAjax('sort/', {sort_field: 'price', sort_order: 'DESC'}); } return false;" href="#">от дорогих</a>
+                                    <span class="arr"></span>
+                                    </li>
+                                    <li>
+                                    <a onclick="if(!$(this).parent().hasClass('selected')) { doAjax('sort/', {sort_field: 'price', sort_order: 'ASC'}); } return false;" href="#">от дешевых</a>
+                                    <span class="arr"></span>
+                                    </li>
+                                    <li>
+                                    <a onclick="if(!$(this).parent().hasClass('selected')) { doAjax('sort/', {sort_field: 'rate', sort_order: 'DESC'}); } return false;" href="#">по популярности</a>
+                                    <span class="arr"></span>
+                                    </li>
+                                    <li class="selected">
+                                    <a onclick="if(!$(this).parent().hasClass('selected')) { doAjax('sort/', {sort_field: 'created', sort_order: 'DESC'}); } return false;" href="#">новые поступления</a>
+                                    <span class="arr"></span>
+                                    </li>
+                                </ul>      
+                                <div class="clr"></div>
+                            </div> 
+                            <div id="box_product">
+                                 {{ render(controller('FrontendStoreBundle:Notebook:catalog')) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <br>
+   {{ include('frontend/contact.html.twig') }}
+{% endblock %}    
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/frontendstore/js/index.js') }}"></script>
+{% endblock %}

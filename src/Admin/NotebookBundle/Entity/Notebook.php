@@ -1,0 +1,1352 @@
+<?php
+
+namespace Admin\NotebookBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="notebook")
+ * @UniqueEntity(
+ *     fields={"code"},
+ *     errorPath="code",
+ *     message="Товар с таким кодом уже существует."
+ * )
+ */
+class Notebook
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PropertiesValue", mappedBy="notebook")
+     */
+    protected $propvalues;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Admin\CategoryBundle\Entity\Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $manufacturer;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     */
+    protected $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $model;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $modification;
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $price;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $color;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $coloreng;
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $code;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $cpu_series;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $cpu_core;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $cpu_frequency;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $display;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $display_resolution;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $display_cover;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $videoadapter_type;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $videoadapter_manufacturer;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $videoadapter;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $ram_type;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $ram_size;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $hdd_type;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $hdd_size; 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $optical_drive;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $volume;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $lan;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $wi_fi;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $bluetooth;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $hdmi;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $usb_two;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $usb_three;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $webcam;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank() 
+     */
+    protected $batteries;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     */
+    protected $batteries_size;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     */
+    protected $os;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $size;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $weight;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description; 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $packaging; 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $additionally; 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=false)
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $rate;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $view;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $comment_count;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $rate_count;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $pay_count;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $notebook_count;
+    /**
+    * @ORM\Column(type="datetime")
+    */
+    protected $created;
+    /**
+    * constructor
+    */
+    public function __construct()
+    {
+      $this->created = new \DateTime();
+      $this->rate = 0;
+      $this->view = 0;
+      $this->comment_count = 0;
+      $this->rate_count = 0;
+      $this->pay_count = 0;
+      $this->notebook_count = 1;
+    }
+  
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set manufacturer
+     *
+     * @param string $manufacturer
+     * @return Notebook
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacturer
+     *
+     * @return string 
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Notebook
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set model
+     *
+     * @param string $model
+     * @return Notebook
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get model
+     *
+     * @return string 
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Set modification
+     *
+     * @param string $modification
+     * @return Notebook
+     */
+    public function setModification($modification)
+    {
+        $this->modification = $modification;
+
+        return $this;
+    }
+
+    /**
+     * Get modification
+     *
+     * @return string 
+     */
+    public function getModification()
+    {
+        return $this->modification;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Notebook
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     * @return Notebook
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string 
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Notebook
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set cpu_series
+     *
+     * @param string $cpuSeries
+     * @return Notebook
+     */
+    public function setCpuSeries($cpuSeries)
+    {
+        $this->cpu_series = $cpuSeries;
+
+        return $this;
+    }
+
+    /**
+     * Get cpu_series
+     *
+     * @return string 
+     */
+    public function getCpuSeries()
+    {
+        return $this->cpu_series;
+    }
+
+    /**
+     * Set cpu_core
+     *
+     * @param string $cpuCore
+     * @return Notebook
+     */
+    public function setCpuCore($cpuCore)
+    {
+        $this->cpu_core = $cpuCore;
+
+        return $this;
+    }
+
+    /**
+     * Get cpu_core
+     *
+     * @return string 
+     */
+    public function getCpuCore()
+    {
+        return $this->cpu_core;
+    }
+
+    /**
+     * Set cpu_frequency
+     *
+     * @param string $cpuFrequency
+     * @return Notebook
+     */
+    public function setCpuFrequency($cpuFrequency)
+    {
+        $this->cpu_frequency = $cpuFrequency;
+
+        return $this;
+    }
+
+    /**
+     * Get cpu_frequency
+     *
+     * @return string 
+     */
+    public function getCpuFrequency()
+    {
+        return $this->cpu_frequency;
+    }
+
+    /**
+     * Set display
+     *
+     * @param string $display
+     * @return Notebook
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+
+        return $this;
+    }
+
+    /**
+     * Get display
+     *
+     * @return string 
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
+     * Set display_resolution
+     *
+     * @param string $displayResolution
+     * @return Notebook
+     */
+    public function setDisplayResolution($displayResolution)
+    {
+        $this->display_resolution = $displayResolution;
+
+        return $this;
+    }
+
+    /**
+     * Get display_resolution
+     *
+     * @return string 
+     */
+    public function getDisplayResolution()
+    {
+        return $this->display_resolution;
+    }
+
+    /**
+     * Set display_cover
+     *
+     * @param string $displayCover
+     * @return Notebook
+     */
+    public function setDisplayCover($displayCover)
+    {
+        $this->display_cover = $displayCover;
+
+        return $this;
+    }
+
+    /**
+     * Get display_cover
+     *
+     * @return string 
+     */
+    public function getDisplayCover()
+    {
+        return $this->display_cover;
+    }
+
+    /**
+     * Set videoadapter_type
+     *
+     * @param string $videoadapterType
+     * @return Notebook
+     */
+    public function setVideoadapterType($videoadapterType)
+    {
+        $this->videoadapter_type = $videoadapterType;
+
+        return $this;
+    }
+
+    /**
+     * Get videoadapter_type
+     *
+     * @return string 
+     */
+    public function getVideoadapterType()
+    {
+        return $this->videoadapter_type;
+    }
+
+    /**
+     * Set videoadapter_manufacturer
+     *
+     * @param string $videoadapterManufacturer
+     * @return Notebook
+     */
+    public function setVideoadapterManufacturer($videoadapterManufacturer)
+    {
+        $this->videoadapter_manufacturer = $videoadapterManufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get videoadapter_manufacturer
+     *
+     * @return string 
+     */
+    public function getVideoadapterManufacturer()
+    {
+        return $this->videoadapter_manufacturer;
+    }
+
+    /**
+     * Set videoadapter
+     *
+     * @param string $videoadapter
+     * @return Notebook
+     */
+    public function setVideoadapter($videoadapter)
+    {
+        $this->videoadapter = $videoadapter;
+
+        return $this;
+    }
+
+    /**
+     * Get videoadapter
+     *
+     * @return string 
+     */
+    public function getVideoadapter()
+    {
+        return $this->videoadapter;
+    }
+
+    /**
+     * Set ram_type
+     *
+     * @param string $ramType
+     * @return Notebook
+     */
+    public function setRamType($ramType)
+    {
+        $this->ram_type = $ramType;
+
+        return $this;
+    }
+
+    /**
+     * Get ram_type
+     *
+     * @return string 
+     */
+    public function getRamType()
+    {
+        return $this->ram_type;
+    }
+
+    /**
+     * Set ram_size
+     *
+     * @param string $ramSize
+     * @return Notebook
+     */
+    public function setRamSize($ramSize)
+    {
+        $this->ram_size = $ramSize;
+
+        return $this;
+    }
+
+    /**
+     * Get ram_size
+     *
+     * @return string 
+     */
+    public function getRamSize()
+    {
+        return $this->ram_size;
+    }
+
+    /**
+     * Set hdd_type
+     *
+     * @param string $hddType
+     * @return Notebook
+     */
+    public function setHddType($hddType)
+    {
+        $this->hdd_type = $hddType;
+
+        return $this;
+    }
+
+    /**
+     * Get hdd_type
+     *
+     * @return string 
+     */
+    public function getHddType()
+    {
+        return $this->hdd_type;
+    }
+
+    /**
+     * Set hdd_size
+     *
+     * @param string $hddSize
+     * @return Notebook
+     */
+    public function setHddSize($hddSize)
+    {
+        $this->hdd_size = $hddSize;
+
+        return $this;
+    }
+
+    /**
+     * Get hdd_size
+     *
+     * @return string 
+     */
+    public function getHddSize()
+    {
+        return $this->hdd_size;
+    }
+
+    /**
+     * Set optical_drive
+     *
+     * @param string $opticalDrive
+     * @return Notebook
+     */
+    public function setOpticalDrive($opticalDrive)
+    {
+        $this->optical_drive = $opticalDrive;
+
+        return $this;
+    }
+
+    /**
+     * Get optical_drive
+     *
+     * @return string 
+     */
+    public function getOpticalDrive()
+    {
+        return $this->optical_drive;
+    }
+
+    /**
+     * Set volume
+     *
+     * @param string $volume
+     * @return Notebook
+     */
+    public function setVolume($volume)
+    {
+        $this->volume = $volume;
+
+        return $this;
+    }
+
+    /**
+     * Get volume
+     *
+     * @return string 
+     */
+    public function getVolume()
+    {
+        return $this->volume;
+    }
+
+    /**
+     * Set lan
+     *
+     * @param string $lan
+     * @return Notebook
+     */
+    public function setLan($lan)
+    {
+        $this->lan = $lan;
+
+        return $this;
+    }
+
+    /**
+     * Get lan
+     *
+     * @return string 
+     */
+    public function getLan()
+    {
+        return $this->lan;
+    }
+
+    /**
+     * Set wi_fi
+     *
+     * @param string $wiFi
+     * @return Notebook
+     */
+    public function setWiFi($wiFi)
+    {
+        $this->wi_fi = $wiFi;
+
+        return $this;
+    }
+
+    /**
+     * Get wi_fi
+     *
+     * @return string 
+     */
+    public function getWiFi()
+    {
+        return $this->wi_fi;
+    }
+
+    /**
+     * Set bluetooth
+     *
+     * @param string $bluetooth
+     * @return Notebook
+     */
+    public function setBluetooth($bluetooth)
+    {
+        $this->bluetooth = $bluetooth;
+
+        return $this;
+    }
+
+    /**
+     * Get bluetooth
+     *
+     * @return string 
+     */
+    public function getBluetooth()
+    {
+        return $this->bluetooth;
+    }
+
+    /**
+     * Set hdmi
+     *
+     * @param string $hdmi
+     * @return Notebook
+     */
+    public function setHdmi($hdmi)
+    {
+        $this->hdmi = $hdmi;
+
+        return $this;
+    }
+
+    /**
+     * Get hdmi
+     *
+     * @return string 
+     */
+    public function getHdmi()
+    {
+        return $this->hdmi;
+    }
+
+    /**
+     * Set usb_two
+     *
+     * @param string $usbTwo
+     * @return Notebook
+     */
+    public function setUsbTwo($usbTwo)
+    {
+        $this->usb_two = $usbTwo;
+
+        return $this;
+    }
+
+    /**
+     * Get usb_two
+     *
+     * @return string 
+     */
+    public function getUsbTwo()
+    {
+        return $this->usb_two;
+    }
+
+    /**
+     * Set usb_three
+     *
+     * @param string $usbThree
+     * @return Notebook
+     */
+    public function setUsbThree($usbThree)
+    {
+        $this->usb_three = $usbThree;
+
+        return $this;
+    }
+
+    /**
+     * Get usb_three
+     *
+     * @return string 
+     */
+    public function getUsbThree()
+    {
+        return $this->usb_three;
+    }
+
+    /**
+     * Set webcam
+     *
+     * @param string $webcam
+     * @return Notebook
+     */
+    public function setWebcam($webcam)
+    {
+        $this->webcam = $webcam;
+
+        return $this;
+    }
+
+    /**
+     * Get webcam
+     *
+     * @return string 
+     */
+    public function getWebcam()
+    {
+        return $this->webcam;
+    }
+
+    /**
+     * Set batteries
+     *
+     * @param string $batteries
+     * @return Notebook
+     */
+    public function setBatteries($batteries)
+    {
+        $this->batteries = $batteries;
+
+        return $this;
+    }
+
+    /**
+     * Get batteries
+     *
+     * @return string 
+     */
+    public function getBatteries()
+    {
+        return $this->batteries;
+    }
+
+    /**
+     * Set batteries_size
+     *
+     * @param string $batteriesSize
+     * @return Notebook
+     */
+    public function setBatteriesSize($batteriesSize)
+    {
+        $this->batteries_size = $batteriesSize;
+
+        return $this;
+    }
+
+    /**
+     * Get batteries_size
+     *
+     * @return string 
+     */
+    public function getBatteriesSize()
+    {
+        return $this->batteries_size;
+    }
+
+    /**
+     * Set os
+     *
+     * @param string $os
+     * @return Notebook
+     */
+    public function setOs($os)
+    {
+        $this->os = $os;
+
+        return $this;
+    }
+
+    /**
+     * Get os
+     *
+     * @return string 
+     */
+    public function getOs()
+    {
+        return $this->os;
+    }
+
+    /**
+     * Set size
+     *
+     * @param string $size
+     * @return Notebook
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return string 
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param string $weight
+     * @return Notebook
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return string 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Page
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Set rate
+     *
+     * @param string $rate
+     * @return Notebook
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Get rate
+     *
+     * @return string 
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    /**
+     * Set view
+     *
+     * @param integer $view
+     * @return Notebook
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return integer 
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * Set comment_count
+     *
+     * @param integer $commentCount
+     * @return Notebook
+     */
+    public function setCommentCount($commentCount)
+    {
+        $this->comment_count = $commentCount;
+
+        return $this;
+    }
+
+    /**
+     * Get comment_count
+     *
+     * @return integer 
+     */
+    public function getCommentCount()
+    {
+        return $this->comment_count;
+    }
+
+    /**
+     * Set rate_count
+     *
+     * @param integer $rateCount
+     * @return Notebook
+     */
+    public function setRateCount($rateCount)
+    {
+        $this->rate_count = $rateCount;
+
+        return $this;
+    }
+
+    /**
+     * Get rate_count
+     *
+     * @return integer 
+     */
+    public function getRateCount()
+    {
+        return $this->rate_count;
+    }
+
+    /**
+     * Set pay_count
+     *
+     * @param integer $payCount
+     * @return Notebook
+     */
+    public function setPayCount($payCount)
+    {
+        $this->pay_count = $payCount;
+
+        return $this;
+    }
+
+    /**
+     * Get pay_count
+     *
+     * @return integer 
+     */
+    public function getPayCount()
+    {
+        return $this->pay_count;
+    }
+
+    /**
+     * Set notebook_count
+     *
+     * @param integer $notebookCount
+     * @return Notebook
+     */
+    public function setNotebookCount($notebookCount)
+    {
+        $this->notebook_count = $notebookCount;
+
+        return $this;
+    }
+
+    /**
+     * Get notebook_count
+     *
+     * @return integer 
+     */
+    public function getNotebookCount()
+    {
+        return $this->notebook_count;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Notebook
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Admin\CategoryBundle\Entity\Category $category
+     * @return Notebook
+     */
+    public function setCategory($category = 4)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Admin\CategoryBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set packaging
+     *
+     * @param string $packaging
+     * @return Notebook
+     */
+    public function setPackaging($packaging)
+    {
+        $this->packaging = $packaging;
+
+        return $this;
+    }
+
+    /**
+     * Get packaging
+     *
+     * @return string 
+     */
+    public function getPackaging()
+    {
+        return $this->packaging;
+    }
+
+    /**
+     * Set additionally
+     *
+     * @param string $additionally
+     * @return Notebook
+     */
+    public function setAdditionally($additionally)
+    {
+        $this->additionally = $additionally;
+
+        return $this;
+    }
+
+    /**
+     * Get additionally
+     *
+     * @return string 
+     */
+    public function getAdditionally()
+    {
+        return $this->additionally;
+    }
+
+    /**
+     * Set coloreng
+     *
+     * @param string $coloreng
+     * @return Notebook
+     */
+    public function setColoreng($coloreng)
+    {
+        $this->coloreng = $coloreng;
+
+        return $this;
+    }
+
+    /**
+     * Get coloreng
+     *
+     * @return string 
+     */
+    public function getColoreng()
+    {
+        return $this->coloreng;
+    }
+    
+   
+}

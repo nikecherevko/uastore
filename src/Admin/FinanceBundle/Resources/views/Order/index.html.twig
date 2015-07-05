@@ -1,0 +1,86 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminfinance/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Заказы</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_finance' }) }} 
+<div class="box box-primary">
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        
+        {% if entities %}
+        <div class="product_detail">
+            <div class="table_title full short">
+                <span>Список заказов</span>
+                <i></i>
+            </div>
+
+            <table>
+            <tbody>
+                    <tr class="full short gray">
+                       <td><b>№</b></td>
+                       <td><b>Ф.И.О</b></td>
+                       <td><b>Телефон</b></td>
+                       <td><b>Сумма</b></td>
+                       <td><b>Статус</b></td>
+                       <td><b>Дата</b></td>
+                       <td><b>Управление</b></td>
+                   </tr> 
+            
+               {% for entity in entities%} 
+                    <tr class="full short gray" id="order-{{ entity.id }}">
+                        <td><span>{{ entity.id }}</span></td>
+                        <td><span class="{% if entity.state == 2 %}state-2{% endif %}">{{ entity.customer }}</span></td>
+                        <td><span class="{% if entity.state == 2 %}state-2{% endif %}">{{ entity.telephone }}</span></td>
+                        <td><span class="{% if entity.state == 2 %}state-2{% endif %}">{{ entity.price|number_format(0, '.', ' ') }} гр.</span></td>
+                        <td>
+                            <span class="state-{{entity.state}}">
+                            {{ states[entity.state] }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                            {{ entity.created|date("H:i j-m-y")}}
+                            </span>
+                        </td>
+                        <td>
+                        <div class="act-button">
+                            <a href="{{ path('admin_order_show', {'id': entity.id}) }}">
+                                <button type="button" class="btn btn-success btn-xs">Show+Edit</button>
+                            </a>                
+                        </div>     
+                        <div class="act-button">
+                            <a href="{{ path('admin_order_edit', {'id': entity.id}) }}">
+                                <button type="button" class="btn btn-warning btn-xs">Edit</button>
+                            </a>                
+                        </div> 
+                        <div class="act-button">
+                            <button type="button" class="btn btn-danger btn-xs" onclick="deleteorder({{entity.id}})">Delete</button>
+                        </div>
+                        <div class="clr"></div>   
+                       </td>
+                    </tr>    
+               {%endfor%} 
+               
+            </table> 
+        </div>
+        {% else %}        
+            Заказов нет!
+        {% endif %}        
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminfinance/js/deleteorder.js') }}"></script>
+{% endblock %}
+  

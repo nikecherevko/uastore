@@ -1,0 +1,37 @@
+<?php
+
+namespace Admin\InfoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="infopage")
+ */
+class Infopage
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Infocategory", inversedBy="infopages")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+    
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     */
+    protected $title;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+   
+ 
+}

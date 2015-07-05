@@ -1,0 +1,249 @@
+{% extends "FrontendPanelBundle::order.html.twig" %}
+
+{% block title %} UA Store - корзина покупок {% endblock %}
+
+{% block stylesheets %} 
+    <link href="{{ asset('bundles/frontendstore/css/index.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+    <div id="basket-page" class="body">
+        <div class="o-header">
+            
+            <table width="100%" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <td class="logos">
+                    <a href="{{path('homepage')}}"><img  src="{{ asset('images/logo.png') }}" itemprop="logo" title="Интернет-магазин" alt=""></a>
+                </td>
+                <td class="titlecart">
+                    <div>
+                        <h1>Ваша корзина</h1>
+                        <p class="returnlink">
+                            <a href="{{path('notebook')}}">вернуться в магазин</a>
+                        </p>
+                    </div>
+                </td>
+                <td class="phones">
+                    <div class="call_block">
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>  
+        </div>
+         
+        {% if entities %}
+        <p class="basket-total-sum" id="bastsum">
+            Вы добавили {{ count }} товар на сумму {{sum|number_format(0, '.', ' ')}}
+            <abbr> грн.</abbr>
+        </p>
+        
+        <div class="o-body">
+        <div class="o-box" id="fastorder">
+            <h2 id="step-info" class="">Оформление заказа</h2>
+            <br>
+            <br>
+            <div id="u-new-content">
+                <form id="addfastorder" action="" method="post">
+                    <table class="o-form">
+                    <tbody>
+                    <tr>
+                        <td class="left">
+                            <p class="flabel">
+                                ФИО
+                            </p>
+                    </td>
+                    <td class="center">
+                        <p class="fdata">
+                            <input id="fioorder" class="google-track inputor size100 " type="text" name="name" value="" required>
+                        </p>
+                    </td>
+                    <td class="right fl-name">
+                        <p class="flegend">На это имя будут оформлены все документы</p>
+                    </td>
+                    </tr>
+                    <tr class="group-delivery">
+                    <td class="left">
+                        <p class="flabel">
+                            Адрес доставки
+                    </p>
+                    </td>
+                    <td class="center">
+                        <p class="fdata">
+                            <input id="addressorder" class="google-track inputor size100 " type="text" name="adress" value="" required>
+                        </p>
+                    </td>
+                    <td class="right fl-adress">
+                        <p class="flegend">Доставим ваш заказ на этот адрес! </p>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="left">
+                            <p class="flabel">
+                                Телефон
+                            <sup>*</sup>
+                        </p>
+                    </td>
+                    <td class="center">
+                        <p class="fdata">
+                        <input id="telephonefast" class="google-track inputor size100 customertel" type="text" name="phone" value="" type="tel" placeholder="(0XX) XXX-XX-XX" value="" name="buyoneclick" required>
+                    </p>
+                    </td>
+                    <td class="right fl-phone">
+                        <p class="flegend">Контактный телефон только на случай вопросов по вашему заказу</p>
+                    </td>
+                    </tr>
+                    <tr class="group-delivery">
+                    <td class="left">
+                        <p class="flabel">
+                            Сумма к оплате: 
+                    </p>
+                    </td>
+                    <td class="center">
+                        <p class="fdata">
+                        <span class="totalorder fastso">
+                            <span class="requesttotal" id="totalsumm">
+                                {{sum|number_format(0, '.', ' ')}}
+                                <abbr> грн.</abbr>
+                            </span>
+                        </span>
+                        </p>
+                    </td>
+                    <td class="right fl-adress">
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="left"></td>
+                        <td class="center algcenter">
+                            <br>
+                            <div class="allg">
+                                <input id="customertelsub" class="google-track bbutton mmedium ggrey" onclick="doFastorder('fast');return false;" type="submit" name="subform" value="Отправить заказ">                            
+                            </div>
+                        </td>
+                        <td class="right"></td>
+                    </tr>    
+                    </tbody>
+                </table>
+                </form>
+            </div>  
+        </div>  
+                    
+        
+        
+        <div class="items-box" style="border-top: 0;" id="container-basket">
+            <table width="99%" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <td width="4px" class="row"></td>
+                <td class="row" width="105px"></td>
+                <td class="row" width="40%"></td>
+                <td class="row" width="15%">количество</td>
+                <td class="row" width="15%">цена</td>
+                <td class="row" width="15%">стоимость</td>
+                <td class="row" width="15%"></td>
+                <td width="4px" class="row"></td>
+            </tr>
+            
+            {% for entity in entities %}
+            <tr id="tr{{entity.id}}" class="items-tr">
+                <td class="bordertd" width="7px"></td>
+                {% set slug = entity.manufacturer ~ entity.model |slugify %} 
+                <td class="bordertd valigntd" width="105px">
+                    <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('width75') }}"  alt="logo"/>
+                </td>
+                <td class="bordertd valigntd" width="40%">
+                    <a href="{{ path('notebook_show', {'id': entity.id, 'slug': slug}) }}">
+                        Ноутбук {{entity.manufacturer}} {{entity.model}} ({{entity.modification}})
+                    </a>
+                </td>
+                <td class="bordertd valigntd aligntd algcenter " width="15%">
+                  1
+                </td>
+                <td class="bordertd valigntd aligntd algcenter" width="15%">
+                    <div class="item-price">
+                        <p class="emptyprice">
+                            <span id="request_price_3929167" class="mainprice">
+                                {{entity.price|number_format(0, '.', ' ')}}
+                                <abbr> грн.</abbr>
+                            </span>
+                        </p>
+                    </div>
+                </td>
+                <td class="bordertd valigntd aligntd algcenter" width="15%">
+                    <span id="request_total_3929167" class="mainprice">
+                        {{entity.price|number_format(0, '.', ' ')}}
+                        <abbr> грн.</abbr>
+                    </span>
+                </td>
+                <td class="bordertd valigntd alignrighttd" width="15%">
+                    <a class="deleteitem" href="#" onclick="doDelproduct({{entity.id}});">удалить</a>
+                </td>
+                <td class="bordertd" width="4px"></td>
+            </tr>
+            {% endfor %}
+            
+            
+            </tbody>
+            </table>
+            
+            
+            <table class="o-items-total">
+            <tbody>
+            <tr>
+                <td class="first">
+                    <p class="returnlink">
+                        <a href="{{path('notebook')}}">вернуться в магазин</a>
+                    </p>
+                </td>
+                <td>
+                    <span class="totalorder">
+                        Итого
+                        <span class="requesttotal" id="totalsumm">
+                            {{sum|number_format(0, '.', ' ')}}
+                            <abbr> грн.</abbr>
+                        </span>
+                    </span>
+                </td>
+                <td class="last">
+                    <div class="ex-steps">
+                        <a class="get-order" style="text-decoration: none;" href="#" onclick="fastorder();">Оформить заказ</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="wc" id="footerinfo">
+            <div class="wc-info">
+                <p class="t">Заказать без оформления.</p>
+                <p>Можно не заполнять никаких форм, просто оставить телефон и консультант решит все вопросы по оформлению заказа.</p> 
+            </div>
+            <div class="wc-form">
+                <div style="padding-left: 1.5em;" id="fastform">
+                    <p class="t">Укажите номер телефона</p>
+                    <p>
+                            <div class="fast_order_form" >
+                                <form id="request_callback_form" action="">
+                                    <input id="submitoneclick" class="submit btn btn-orange" type="submit" value="Оформить в 1 клик" onclick="doBuyoneclick('fast');return false;">
+                                    <input id="buyoneclick" class="buyoneclick" type="tel" placeholder="(0XX) XXX-XX-XX" value="" name="buyoneclick" required>
+                                </form>
+                                <div class="clr"></div>
+                            </div>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {% else %}  
+        Корзина пуста. Нужно исправить :)
+    {% endif %}                    
+                        
+{% endblock %}    
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/frontendstore/js/index.js') }}"></script>
+{% endblock %}

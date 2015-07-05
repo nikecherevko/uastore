@@ -1,0 +1,23 @@
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">Перезвонить</h3>
+    </div>
+    <div class="box-body no-padding">
+        <ul class="nav nav-pills nav-stacked">
+            <li>
+                <a href="{{ path('admin_contact_callme_getall') }}">
+                    <i class="fa fa-filter"></i>
+                    Обработано
+                    <span class="label label-waring pull-right">{{ noactive }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('admin_contact_callme')}}">
+                    <i class="fa fa-filter"></i>
+                    Не обработано
+                    <span class="label pull-right bg-red">{{ active }}</span>
+                </a>
+            </li>
+        </ul>    
+    </div>
+</div>    

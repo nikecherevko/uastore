@@ -1,0 +1,39 @@
+{% form_theme form 'AdminCommonBundle:Form:fields.html.twig' %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    
+    <div class="has-feedback">
+        {{ form_row(form.username) }}
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    
+    <div class="has-feedback">
+        {{ form_row(form.email) }}
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div>
+    
+    <div class="has-feedback">
+        {{ form_row(form.plainPassword) }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+        
+    <div class="checklogin"> 
+        <input onClick="EnableSubmit(this)" type="checkbox" id="remember_me" name="_remember_me" value="on" />      
+        <label for="remember_me"></label> 
+    </div>
+    
+    <div class="checklabelr">
+        I agree to the terms    
+    </div>
+    
+    <div class="checksubmit">
+        <input disabled type="submit" id="_submit" name="_submit" value="Register" class="btn btn-primary btn-block btn-flat" />
+    </div>
+    <br>
+ 
+{{ form_end(form) }}
+
+{% block javascripts %} 
+   <script type="text/javascript" src="{{ asset('bundles/adminuser/js/actsubmit.js') }}"></script>
+{% endblock %}   
+ 

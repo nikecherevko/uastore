@@ -1,0 +1,75 @@
+<?php
+
+namespace Admin\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="user_address")
+ */
+class Address
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * 
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="addresss")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * 
+     * @Assert\NotBlank()
+     */
+    protected $user;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage = "Минимальное количество 2 символа",
+     * )
+     */
+    protected $address;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=2,
+     *     minMessage = "Минимальное количество 2 символа",
+     * )
+     */
+    protected $telephone;
+    
+    /**
+     * @Assert\Email(message = "Email is not valid")
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $email;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $home;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $apartment;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+     
+}

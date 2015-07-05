@@ -1,0 +1,99 @@
+{% extends "AdminAdminPanelBundle::main.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/adminnotebook/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminfinance/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/adminfinance/css/form.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block contenttitle %}<h1>Заказ</h1>{% endblock %}
+
+{% block body -%}
+{{ include('adminpanel/menu/route.html.twig', { 'name': 'admin_finance' }) }} 
+<div class="box box-primary">
+    <div class="box-info">
+        {% for flashMessage in app.session.flashbag.get('notice_success') %}
+            <div id="notice-box" class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %} 
+        <div class="product_detail" id="ordercontainer">
+        <div class="table_title full short">
+            <span>Редактирование заказа</span>
+            <i></i>
+        </div>
+            
+        {{ form_start(form) }}   
+            
+        <table class="order_product">
+        <tbody>
+        <tr class="full ">
+            <td class="name">Номер заказа</td>
+            <td class="value"><b>№ {{entity.id}}</b></td>
+        </tr>
+                <tr class="full short gray">
+            <td class="name">Содержимое заказа:</td>
+            <td class="value">
+                {% for order in orders%}
+                <div id="product-{{order.id}}">    
+                    - Ноутбук 
+                    <a href="{{ path('admin_notebook_show', {'id': order.notebook.id})}}">
+                        {{order.notebook.manufacturer}} {{order.notebook.model}} ({{order.notebook.modification}})
+                    </a>
+                    <b>{{order.notebook.price|number_format(0, '.', ' ')}} гр.</b>
+                    <button type="button" class="btn btn-danger btn-xs" onclick="delproduct({{order.id}},{{entity.id}});" title="удалить">удалить</button>
+                    <br>
+                    <br>
+                </div>
+                {% endfor %}
+            </td>
+        </tr> 
+        <tr class="full">
+            <td class="name">Ф.И.О</td>
+            <td class="value">{{ form_widget(form.customer) }}</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Телефон</td>
+            <td class="value">{{ form_widget(form.telephone) }}</td>
+        </tr>
+        <tr class="full">
+            <td class="name">Адрес доставки</td>
+            <td class="value">{{ form_widget(form.address) }}</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Способ оплаты</td>
+            <td class="value">{{ form_widget(form.payment) }} </td>
+        </tr>
+        <tr class="full">
+            <td class="name">Общая сумма</td>
+            <td class="value">{{ form_widget(form.price) }} гр.</td>
+        </tr>
+        <tr class="full short gray">
+            <td class="name">Статус:</td>
+            <td class="value">
+                <div id="order-state">{{ form_widget(form.state) }} </div>
+            </td>
+        </tr>
+        </table>
+        <div class="table_title">
+        <span>
+            <div>
+                <span>
+                    <input class="btn btn-primary  btn-flat" type="submit" value="Сохранить">
+                </span>
+            </div>  
+        </span>
+        <i></i>
+        </div> 
+            
+        {{ form_end(form) }}       
+            
+        <div class="clr"></div> 
+        </div>
+    </div>
+</div>
+{% endblock %}
+  
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/adminfinance/js/confirm.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+.li-content {
+    margin-right: 20px;
+}
+
+.state-0 {
+    color: red;
+    font-weight: bold;
+}
+
+.state-1 {
+    color: #000000;
+}
+
+.state-2 {
+   color: #c0c0c0;
+   text-decoration: line-through;
+
+}
+
+.state-3{
+   color: green;
+   font-weight: bold;
+}
+
+.act-order {
+    width: 500px;
+    margin: 0 auto;
+}
+.delorder {
+    color: red;
+    cursor: pointer;
+    border: 1px solid red;
+    padding: 0px 3px;
+    font-size: 8px;
+}

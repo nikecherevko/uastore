@@ -1,0 +1,14 @@
+{% extends "FrontendPanelBundle::main.html.twig" %}
+
+{% block title %} UA Store - Интернет магазин ноутбуков {% endblock %}
+
+{% block stylesheets %} 
+    <link href="{{ asset('bundles/frontendstore/css/index.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body -%}
+     
+    <div class="error404"><h1>К сожалению, такой страницы нет!</h1></div> 
+   {{ include('frontend/contact.html.twig') }}
+{% endblock %}    
+ 

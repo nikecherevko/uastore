@@ -1,0 +1,61 @@
+<?php
+
+namespace Admin\ContactBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="telephone_store")
+ * @UniqueEntity(
+ *     fields={"telephone"},
+ *     errorPath="telephone",
+ *     message="Такой телефон уже существует."
+ * )
+ */
+class Telephone
+{
+    /**
+     * @ORM\Column(type="smallint")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $telephone;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $image;
+    
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     * 
+     * @Assert\Image(
+     *     minWidth = 15,
+     *     maxWidth = 700,
+     *     minHeight = 15,
+     *     maxHeight = 700,
+     *     maxWidthMessage = "Максимальная ширина логотипа 700px",
+     *     minWidthMessage = "Минимальная ширина логотипа 15px",
+     *     maxHeightMessage = "Максимальная высота логотипа 700px",
+     *     minHeightMessage = "Минимальная высота логотипа 15px",
+     *     mimeTypesMessage = "Этот формат изображения не поддерживается",
+     * )
+     */
+    public $file;
+    
+    
+    
+    
+}

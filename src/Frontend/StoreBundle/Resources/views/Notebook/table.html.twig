@@ -1,0 +1,212 @@
+{% if entitiesf %}
+<div class="accepted">
+    <ul>
+        {% for entityf in entitiesf %}
+        <li>
+           {{entityf.value}}<span onclick="delfitlr({{entityf.id}})"></span>
+        </li>
+        {% endfor %}
+        <li class="closeli">
+            Очистить фильтры <span  class="close"  onclick="delfitlr(0)"  title="очистить фильтры"></span>
+        </li> 
+    </ul>
+    <div class="clr"></div>
+</div>   
+{% endif %} 
+
+{% if entities %}
+{% for entity in entities %}
+<div class="catalog_product_list">
+    <div id="item-{{entity.id}}" class="catalog_item">
+        <div class="over-wraper">
+            <div class="titlen">
+                {% set slug = entity.manufacturer ~ entity.model |slugify %} 
+                
+                <h1><a href="{{ path('notebook_show', {'id': entity.id, 'slug': slug}) }}">{{entity.manufacturer}} {{entity.model}} ({{entity.modification}})</a></h1>
+            </div>
+            <div class="img">
+                 
+                <a href="{{ path('notebook_show', {'id': entity.id, 'slug': slug}) }}">
+                    <img  src="{{ asset('images/notebook/'~entity.image) | apply_filter('widthlogo120') }}"   alt="logo" />
+                </a>
+            </div>
+            <div class="pricenote">
+                <div class="pricey">
+                    <span class="pricew"> 
+                        {{entity.price|number_format(0, '.', ' ')}}
+                    <span class="currency"> грн.</span>
+                </div>
+                <button class="btn btn-danger btn-by" type="button" onclick="doCart({{entity.id}});">Купить</button>    
+                <div class="code">Код: {{entity.code}}</div>
+                <div class="clr"></div>
+            </div>
+            <div class="additional_info">
+                <div class="block_title">Особенности</div>
+                    <div class="params_icons_block">
+                        {% if 'Intel Core i7' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                             <div class="params_icons_block_title">Intel Core i7</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Core i5' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Core i5</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Core i3' in entity.cpuSeries  %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Core i3</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Pentium' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Pentium</div>
+                        </div> 
+                        {% endif %} 
+                        
+                        {% if 'Intel Celeron' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Celeron</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if 'Intel Atom' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Atom</div>
+                        </div> 
+                        {% endif %}                        
+                        
+                        {% if 'Intel Core M' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Intel Core M</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if 'AMD A10' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">AMD A10</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if 'AMD A8' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">AMD A8</div>
+                        </div> 
+                        {% endif %}                        
+                        
+                        {% if 'AMD A6' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">AMD A6</div>
+                        </div> 
+                        {% endif %}                         
+                        
+                        {% if  'AMD A4' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">AMD A4</div>
+                        </div> 
+                        {% endif %}                           
+                        
+                        {% if 'AMD E' in entity.cpuSeries %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">AMD E</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.hddType == 'SSD' %}   
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">SSD</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.hdmi %}   
+                        <div class="params_icons_block_item">
+                             <div class="params_icons_block_title">HDMI</div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.usbTwo %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">{{entity.usbTwo}} x USB 2.0 </div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.usbThree %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">{{entity.usbThree}} x USB 3.0 </div>
+                        </div>    
+                        {% endif %}
+                        
+                        {% if entity.bluetooth %} 
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Bluetooth </div>
+                        </div> 
+                        {% endif %}
+                        
+                        {% if entity.wifi %}    
+                        <div class="params_icons_block_item">
+                            <div class="params_icons_block_title">Wi-Fi {{entity.wifi}}</div>
+                        </div>  
+                        {% endif %}  
+                        <div class="clr"></div>
+                    </div>    
+                
+                
+                
+                
+                <div class="descr">
+                    <div class="info">
+                        <ul class="sv">
+                            <li>
+                                <span>Проц.:</span>
+                                {{entity.cpuSeries}}, {{entity.cpuFrequency}}
+                            </li>
+                            <li>
+                                <span>Экран:</span>
+                                {{entity.display}}, {{entity.displayResolution}}
+                            </li>
+                            <li>
+                                <span>Видео:</span>
+                                {{entity.videoadapterManufacturer}}, {{entity.videoadapter}}
+                            </li>
+                            <li>
+                                <span>ОЗУ:</span>
+                                 {{entity.ramType}}, {{entity.ramSize}}
+                            </li>
+                            <li>
+                                <span>ПЗУ:</span>
+                                 {{entity.hddType}}, {{entity.hddSize}}
+                            </li>
+                            <li>
+                                <span>Батарея:</span>
+                                {{entity.batteries}}
+                            </li>
+                            <li>
+                                <span>ОС:</span>
+                                {{entity.os}}
+                            </li>
+                            <li>
+                                <span>Цвет корпуса:</span>
+                                {{entity.color}}
+                            </li>
+                            <li>
+                                <span>Вес:</span>
+                                {{entity.weight}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div class="clr"></div>                 
+        </div>   
+    </div>   
+
+</div>    
+{% endfor %}
+
+{% else %}
+    Ноутбуков нет.
+{% endif %}   

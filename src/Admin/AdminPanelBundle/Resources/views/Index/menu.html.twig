@@ -1,0 +1,45 @@
+<div id='cssmenu'> 
+    <ul>
+        <li id="admin_adminpanel"> 
+            <a href="{{ path('homepage_admin') }}">
+                <i class="fa-main"></i>
+                <span>Главная </span>
+            </a> 
+        </li>
+    </ul>    
+    
+    
+{% if entities %}
+  
+{% for key, entity in entities %}
+    
+    {% if entity|default %}
+    <ul>
+        <li {% if entity|default %} class='has-sub' {% endif %} id="{{ route[key] }}" > 
+            
+            <a href="#">
+                <i class="fa-info"></i>
+                <span>{{ entity.0.category }}</span>
+            </a> 
+            
+            {% if entity|default %}
+                <ul>
+                {% for entitymenu in entity %}
+                <li>
+                    <a href="{{ path(entitymenu.path)}}">
+                        <i class="fa-circle"></i>
+                        <span>{{entitymenu.title}}</span>
+                    </a>
+                </li>
+                {% endfor %}
+                </ul>
+            {% endif %}        
+        </li>
+    </ul>
+    {% endif %}          
+{% endfor %}
+    
+{% else %}
+    <li>Категорий нет. </li>
+{% endif %}  
+</div>

@@ -1,0 +1,40 @@
+.container-notebook-new input[type="text"] {
+    width: 30em;
+}
+
+.container-notebook-new textarea {
+    width: 30em;
+    height: 20em;
+}
+
+.container-notebook-new select {
+    height: 2.3em;
+}
+ 
+
+.container-notebook-new input[type="text"], .form_row input[type="email"], .form_row input[type="password"],
+.order_product input[type="text"]
+{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: inline-block;
+    font-size: 15px;
+    height: 35px;
+    margin-bottom: 5px;
+    padding: 3px 3px 3px 6px;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    vertical-align: middle;
+    width: 29em;
+}
+
+.container-notebook-new input[type="text"]:focus, .form_row input[type="email"]:focus, .form_row input[type="password"]:focus
+{
+    border-color: #605ca8;
+    box-shadow: none;
+}
+
+.order_product select {
+    height: 2.3em;
+}

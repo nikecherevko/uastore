@@ -1,0 +1,28 @@
+<ul class="ul-treefree">
+{% if entities %}
+    {% for entity in entities %}
+    <li id="li-container{{entity.id}}"> 
+        <div class="li-content-container-sub">   
+            <div class="li-content-sub">{{ entity.title }}</div> 
+            <div class="li-content-button">
+                <a href="{{ path('admin_menu_edit', { 'id': entity.id }) }}">
+                    <button type="button" class="btn btn-default btn-sm">edit</button>
+                </a>
+            </div>
+            <div class="li-content-button">
+                <div class="confitem{{entity.id}}">
+                    <button  type="button" class="btn btn-default btn-sm" onclick="confirmdelete({{entity.id}},'{{ entity.title }}',0)">delete</button>
+                </div>
+            </div>
+            <br>
+            <div id="categorysub_{{entity.id}}" class="li-content-both"> </div>
+            <div class="height10"></div>
+        </div>    
+    </li>
+    {% endfor %}
+{% else %}
+    <li>Нету пунктов меню. </li>
+{% endif %} 
+</ul>
+
+ 
